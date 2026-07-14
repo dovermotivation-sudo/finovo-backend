@@ -1,14 +1,14 @@
 <!-- Two-Level Navigation System -->
 <div x-data="{ open: false }">
     <!-- Top Header with Logo, Language, and Profile -->
-    <header class="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 text-white shadow-lg">
+    <header class="bg-indigo-700 text-white shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-4">
                 <!-- Logo -->
                 <div class="flex items-center space-x-3">
                     <div class="bg-white rounded-lg p-2">
                         <a href="{{ Auth::user()->role === 'super_admin' ? route('super-admin.dashboard') : route('user.dashboard') }}" class="flex items-center">
-                            <img src="{{ asset('logo/grow-logo.png') }}" alt="Grow Logo" class="h-8 w-auto">
+                            <img src="{{ asset('logo/finovo-logo.png') }}" alt="Finovo Logo" class="h-8 w-auto">
                         </a>
                     </div>
                 </div>
@@ -106,6 +106,11 @@
                                     <x-dropdown-link :href="route('profile.edit')" class="flex items-center space-x-2">
                                         <i class="fas fa-user w-4"></i>
                                         <span>{{ __('profile.my_profile') }}</span>
+                                    </x-dropdown-link>
+
+                                    <x-dropdown-link :href="route('deposits.index')" class="flex items-center space-x-2">
+                                        <i class="fas fa-wallet w-4 text-blue-500"></i>
+                                        <span class="font-semibold text-blue-600">{{ __('profile.deposit_funds') }}</span>
                                     </x-dropdown-link>
                                     
                                     <x-dropdown-link href="#" class="flex items-center space-x-2">
@@ -244,6 +249,20 @@
                    class="border-b-2 {{ request()->routeIs('admin.referrals.*') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
                     <i class="fas fa-gift"></i>
                     <span>Referrals</span>
+                </a>
+
+                <!-- Deposits Management Link (Super Admin Only) -->
+                <a href="{{ route('admin.deposits.index') }}" 
+                   class="border-b-2 {{ request()->routeIs('admin.deposits.*') && !request()->routeIs('admin.deposits.settings') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
+                    <i class="fas fa-wallet"></i>
+                    <span>Deposit Management</span>
+                </a>
+
+                <!-- Deposit Settings Link (Super Admin Only) -->
+                <a href="{{ route('admin.deposits.settings') }}" 
+                   class="border-b-2 {{ request()->routeIs('admin.deposits.settings') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
+                    <i class="fas fa-cog"></i>
+                    <span>Deposit Settings</span>
                 </a>
                 @endif
             </div>

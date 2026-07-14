@@ -115,7 +115,7 @@
                 </div>
 
                 <!-- Preview Card -->
-                <div class="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-6">
+                <div class="bg-blue-50/50 border border-blue-200 rounded-lg p-6">
                     <h4 class="text-sm font-semibold text-gray-700 mb-3">
                         <i class="fas fa-eye mr-2"></i>Reward Preview
                     </h4>

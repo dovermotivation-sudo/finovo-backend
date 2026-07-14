@@ -18,7 +18,7 @@
     <div class="min-h-screen flex flex-col items-center justify-center" style="background-color: #efefef">
         <div class="text-center mb-6">
             <a href="/" class="flex justify-center">
-                <img src="{{ asset('logo/grow-logo.png') }}" alt="Grow Logo" class="h-16 w-auto" style="margin-top: 20px">
+                <img src="{{ asset('logo/finovo-logo.png') }}" alt="Finovo Logo" class="h-16 w-auto" style="margin-top: 20px">
             </a>
         </div>
 

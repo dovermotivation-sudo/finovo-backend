@@ -34,7 +34,7 @@
                         <!-- Slider Container -->
                         <div class="slider-container" id="userSlider">
                             <!-- Slide 1 - KYC -->
-                            <div class="slide active bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 p-6 text-white relative">
+                            <div class="slide active bg-blue-600 p-6 text-white relative">
                                 <div class="relative z-10">
                                     <h3 class="text-xl font-bold mb-2">{{ __('dashboard.complete_kyc') }}</h3>
                                     <p class="text-blue-100 text-sm mb-4">{{ __('dashboard.kyc_description') }}</p>
@@ -50,7 +50,7 @@
                             </div>
 
                             <!-- Slide 2 - Trading -->
-                            <div class="slide bg-gradient-to-r from-green-600 via-teal-600 to-cyan-700 p-6 text-white relative">
+                            <div class="slide bg-green-600 p-6 text-white relative">
                                 <div class="relative z-10">
                                     <h3 class="text-xl font-bold mb-2">{{ __('dashboard.start_trading') }}</h3>
                                     <p class="text-green-100 text-sm mb-4">{{ __('dashboard.trading_description') }}</p>
@@ -66,7 +66,7 @@
                             </div>
 
                             <!-- Slide 3 - Portfolio -->
-                            <div class="slide bg-gradient-to-r from-purple-600 via-pink-600 to-red-700 p-6 text-white relative">
+                            <div class="slide bg-purple-600 p-6 text-white relative">
                                 <div class="relative z-10">
                                     <h3 class="text-xl font-bold mb-2">{{ __('dashboard.build_portfolio') }}</h3>
                                     <p class="text-purple-100 text-sm mb-4">{{ __('dashboard.portfolio_description') }}</p>

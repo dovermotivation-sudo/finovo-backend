@@ -34,7 +34,7 @@
                         <!-- Slider Container -->
                         <div class="slider-container" id="adminSlider">
                             <!-- Slide 1 - Analytics -->
-                            <div class="slide active bg-gradient-to-r from-green-600 via-teal-600 to-blue-700 p-6 text-white relative">
+                            <div class="slide active bg-green-600 p-6 text-white relative">
                                 <div class="relative z-10">
                                     <h3 class="text-xl font-bold mb-2">{{ __('dashboard.platform_analytics') }}</h3>
                                     <p class="text-green-100 text-sm mb-4">{{ __('dashboard.analytics_description') }}</p>
@@ -50,7 +50,7 @@
                             </div>
 
                             <!-- Slide 2 - User Management -->
-                            <div class="slide bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-700 p-6 text-white relative">
+                            <div class="slide bg-blue-600 p-6 text-white relative">
                                 <div class="relative z-10">
                                     <h3 class="text-xl font-bold mb-2">{{ __('dashboard.user_management') }}</h3>
                                     <p class="text-blue-100 text-sm mb-4">{{ __('dashboard.user_mgmt_description') }}</p>
@@ -66,7 +66,7 @@
                             </div>
 
                             <!-- Slide 3 - System Settings -->
-                            <div class="slide bg-gradient-to-r from-orange-600 via-red-600 to-pink-700 p-6 text-white relative">
+                            <div class="slide bg-orange-600 p-6 text-white relative">
                                 <div class="relative z-10">
                                     <h3 class="text-xl font-bold mb-2">{{ __('dashboard.system_settings') }}</h3>
                                     <p class="text-orange-100 text-sm mb-4">{{ __('dashboard.settings_description') }}</p>
@@ -358,7 +358,7 @@
                 <!-- Right Column -->
                 <div class="space-y-6">
                     <!-- KYC Quick Actions -->
-                    <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-sm p-6 text-white">
+                    <div class="bg-blue-600 rounded-xl shadow-sm p-6 text-white">
                         <div class="flex items-center mb-4">
                             <div class="p-3 bg-white bg-opacity-20 rounded-lg">
                                 <i class="fas fa-id-card text-2xl"></i>

@@ -11,6 +11,8 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\KycController;
 use App\Http\Controllers\ReferralController;
 use App\Http\Controllers\Admin\AdminReferralController;
+use App\Http\Controllers\DepositController;
+use App\Http\Controllers\Admin\AdminDepositController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -76,6 +78,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('kyc.resubmit');
 });
 
+// Deposits Routes for Users
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/deposits', [DepositController::class, 'index'])->name('deposits.index');
+    Route::post('/deposits', [DepositController::class, 'store'])->name('deposits.store');
+});
+
 // KYC Routes for Admin
 Route::middleware(['auth', 'super_admin'])->prefix('admin')->group(function () {
     Route::get('/kyc', [KycController::class, 'adminIndex'])->name('admin.kyc.index');
@@ -83,6 +91,16 @@ Route::middleware(['auth', 'super_admin'])->prefix('admin')->group(function () {
     Route::post('/kyc/{id}/approve', [KycController::class, 'approve'])->name('admin.kyc.approve');
     Route::post('/kyc/{id}/reject', [KycController::class, 'reject'])->name('admin.kyc.reject');
     Route::delete('/kyc/delete', [KycController::class, 'deleteKycDocuments'])->name('admin.kyc.delete');
+});
+
+// Deposits Routes for Admin
+Route::middleware(['auth', 'super_admin'])->prefix('admin')->group(function () {
+    Route::get('/deposits', [AdminDepositController::class, 'index'])->name('admin.deposits.index');
+    Route::get('/deposits/{id}', [AdminDepositController::class, 'show'])->name('admin.deposits.show');
+    Route::post('/deposits/{id}/approve', [AdminDepositController::class, 'approve'])->name('admin.deposits.approve');
+    Route::post('/deposits/{id}/reject', [AdminDepositController::class, 'reject'])->name('admin.deposits.reject');
+    Route::get('/deposit-settings', [AdminDepositController::class, 'settings'])->name('admin.deposits.settings');
+    Route::post('/deposit-settings', [AdminDepositController::class, 'updateSettings'])->name('admin.deposits.settings.update');
 });
 
 // Referral Routes for Users

@@ -58,7 +58,7 @@
         </div>
 
         <!-- Referral Link Card -->
-        <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg shadow-lg p-8 mb-8 text-white">
+        <div class="bg-indigo-600 rounded-lg shadow-lg p-8 mb-8 text-white">
             <h2 class="text-2xl font-bold mb-4">Share Your Referral Link</h2>
             <p class="mb-6 opacity-90">Invite your friends and earn rewards when they complete their KYC!</p>
             
@@ -311,13 +311,13 @@
 
         function shareWhatsApp() {
             const link = document.getElementById('referralLink').textContent;
-            const text = `Join GrowMax Investments using my referral link and start your investment journey! ${link}`;
+            const text = `Join Finovo Investments using my referral link and start your investment journey! ${link}`;
             window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
         }
 
         function shareTwitter() {
             const link = document.getElementById('referralLink').textContent;
-            const text = `Join GrowMax Investments using my referral link and start your investment journey!`;
+            const text = `Join Finovo Investments using my referral link and start your investment journey!`;
             window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(link)}`, '_blank');
         }
 
@@ -328,8 +328,8 @@
 
         function shareEmail() {
             const link = document.getElementById('referralLink').textContent;
-            const subject = 'Join GrowMax Investments - Investment Platform';
-            const body = `Hi,\n\nI'd like to invite you to join GrowMax Investments, an amazing investment platform.\n\nUse my referral link to get started: ${link}\n\nLooking forward to seeing you there!`;
+            const subject = 'Join Finovo Investments - Investment Platform';
+            const body = `Hi,\\n\\nI'd like to invite you to join Finovo Investments, an amazing investment platform.\\n\\nUse my referral link to get started: ${link}\\n\\nLooking forward to seeing you there!`;
             window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         }
 

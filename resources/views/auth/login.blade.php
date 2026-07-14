@@ -8,7 +8,7 @@
                 <!-- Title & Subtitle -->
                 <h2 class="text-xl font-semibold text-gray-800 mb-2">Sign-In</h2>
                 <p class="text-sm text-gray-500 mb-6">
-                    Access the GrowMax Investment panel using your email and password.
+                    Access the Finovo Investment panel using your email and password.
                 </p>
 
                 <!-- Session Status -->
@@ -82,13 +82,13 @@
 
                 <!-- Footer Links -->
                 <div class="mt-12 text-center text-xs text-gray-400 space-x-4">
-                    <a href="https://growmaxinvestments.in/term-condition" class="hover:underline px-2" target="_blank">Terms & Conditions</a> |
-                    <a href="https://growmaxinvestments.in/privacy-policy" class="hover:underline" target="_blank">Privacy Policy</a> 
+                    <a href="https://finovoinvestments.in/term-condition" class="hover:underline px-2" target="_blank">Terms & Conditions</a> |
+                    <a href="https://finovoinvestments.in/privacy-policy" class="hover:underline" target="_blank">Privacy Policy</a> 
                 </div>
 
                 <!-- Footer Note -->
                 <p class="text-center text-xs text-gray-400 mt-2">
-                    © 2025 GrowMax Investment. All Rights Reserved.
+                    © 2026 Finovo Investment. All Rights Reserved.
                 </p>
             </div>
         </div>
@@ -98,12 +98,12 @@
             <div class="flex justify-center mb-6">
                 <img src="{{ asset('image/login.png') }}" alt="Security Illustration" class="w-64 h-64">
             </div>
-            <h3 class="text-xl font-bold text-gray-900">GrowMax Investment</h3>
+            <h3 class="text-xl font-bold text-gray-900">Finovo Investment</h3>
             <p class="text-gray-600 max-w-md mx-auto">
-              GrowMax Trading is a trusted bot provider giving you access to institutional-grade, automated trading systems. With expert support and intuitive features, we help you succeed in any market with confidence.
+              Finovo Trading is a trusted bot provider giving you access to institutional-grade, automated trading systems. With expert support and intuitive features, we help you succeed in any market with confidence.
             </p>
             <p class="text-indigo-700 font-semibold mt-4">
-                Join GrowMax Investment today and take control of your financial future.
+                Join Finovo Investment today and take control of your financial future.
             </p>
         </div>
 
