@@ -21,8 +21,8 @@ class SuperAdminSeeder extends Seeder
                 'role' => 'super_admin',
                 'portfolio_value' => 100000,
                 'total_returns' => 5000,
-                'active_plans' => 1,
                 'growth_rate' => 12.5,
+                'email_verified_at' => now(),
             ]
         );
     }
