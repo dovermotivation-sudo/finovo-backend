@@ -1,0 +1,62 @@
+<?php
+
+return [
+    // User Management
+    'full_name' => 'Nom Complet',
+    'email' => 'E-mail',
+    'portfolio_value' => 'Valeur du Portefeuille',
+    'total_returns' => 'Rendements Totaux',
+    'growth_rate' => 'Taux de Croissance',
+    'active_plan' => 'Plan Actif',
+    'actions' => 'Actions',
+    'edit' => 'Modifier',
+    'no_plan' => 'Aucun Plan',
+    'no_users_found' => 'Aucun utilisateur trouvé.',
+    
+    // Edit User
+    'edit_user' => 'Modifier Utilisateur',
+    'user_details' => 'Détails de l\'Utilisateur',
+    'investment_details' => 'Détails d\'Investissement',
+    'plan_selection' => 'Sélection de Plan',
+    'save_changes' => 'Sauvegarder les Modifications',
+    'cancel' => 'Annuler',
+    'select_plan' => 'Sélectionner un Plan',
+    'user_updated_successfully' => 'Utilisateur mis à jour avec succès!',
+    
+    // Investment Plans
+    'investment_plans' => 'Plans d\'Investissement',
+    'plan_name' => 'Nom du Plan',
+    'minimum_investment' => 'Investissement Minimum',
+    'maximum_investment' => 'Investissement Maximum',
+    'duration_months' => 'Durée (Mois)',
+    'expected_return' => 'Rendement Attendu (%)',
+    'status' => 'Statut',
+    'created_date' => 'Date de Création',
+    'add_new_plan' => 'Ajouter Nouveau Plan',
+    'edit_plan' => 'Modifier Plan',
+    'delete_plan' => 'Supprimer Plan',
+    'no_plans_found' => 'Aucun plan d\'investissement trouvé.',
+    'active' => 'Actif',
+    'inactive' => 'Inactif',
+    
+    // Additional Edit User Keys
+    'plan_information' => 'Informations du Plan',
+    'plan_type' => 'Type de Plan',
+    'name' => 'Nom',
+    'description' => 'Description',
+    'roi' => 'ROI',
+    'risk_level' => 'Niveau de Risque',
+    'report_frequency' => 'Fréquence de Rapport',
+    'support_type' => 'Type de Support',
+    'activation_time' => 'Temps d\'Activation',
+    'other_features' => 'Autres Caractéristiques',
+    'yes' => 'Oui',
+    'no' => 'Non',
+    'no_additional_features' => 'Aucune caractéristique supplémentaire.',
+    'added_on' => 'Ajouté le',
+    'no_plan_assigned' => 'Aucun plan assigné',
+    'update_user_information' => 'Mettre à Jour les Informations de l\'Utilisateur',
+    'growth_rate_percent' => 'Taux de Croissance (%)',
+    'update_user' => 'Mettre à Jour l\'Utilisateur',
+    'plans_management_coming_soon' => 'La gestion des plans sera bientôt disponible.',
+];

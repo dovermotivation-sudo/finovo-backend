@@ -1,0 +1,62 @@
+<?php
+
+return [
+    // User Management
+    'full_name' => 'पूरा नाम',
+    'email' => 'ईमेल',
+    'portfolio_value' => 'पोर्टफोलियो मूल्य',
+    'total_returns' => 'कुल रिटर्न',
+    'growth_rate' => 'वृद्धि दर',
+    'active_plan' => 'सक्रिय योजना',
+    'actions' => 'कार्य',
+    'edit' => 'संपादित करें',
+    'no_plan' => 'कोई योजना नहीं',
+    'no_users_found' => 'कोई उपयोगकर्ता नहीं मिले।',
+    
+    // Edit User
+    'edit_user' => 'उपयोगकर्ता संपादित करें',
+    'user_details' => 'उपयोगकर्ता विवरण',
+    'investment_details' => 'निवेश विवरण',
+    'plan_selection' => 'योजना चयन',
+    'save_changes' => 'परिवर्तन सहेजें',
+    'cancel' => 'रद्द करें',
+    'select_plan' => 'योजना चुनें',
+    'user_updated_successfully' => 'उपयोगकर्ता सफलतापूर्वक अपडेट किया गया!',
+    
+    // Investment Plans
+    'investment_plans' => 'निवेश योजनाएं',
+    'plan_name' => 'योजना का नाम',
+    'minimum_investment' => 'न्यूनतम निवेश',
+    'maximum_investment' => 'अधिकतम निवेश',
+    'duration_months' => 'अवधि (महीने)',
+    'expected_return' => 'अपेक्षित रिटर्न (%)',
+    'status' => 'स्थिति',
+    'created_date' => 'निर्माण तिथि',
+    'add_new_plan' => 'नई योजना जोड़ें',
+    'edit_plan' => 'योजना संपादित करें',
+    'delete_plan' => 'योजना हटाएं',
+    'no_plans_found' => 'कोई निवेश योजना नहीं मिली।',
+    'active' => 'सक्रिय',
+    'inactive' => 'निष्क्रिय',
+    
+    // Additional Edit User Keys
+    'plan_information' => 'योजना जानकारी',
+    'plan_type' => 'योजना प्रकार',
+    'name' => 'नाम',
+    'description' => 'विवरण',
+    'roi' => 'ROI',
+    'risk_level' => 'जोखिम स्तर',
+    'report_frequency' => 'रिपोर्ट आवृत्ति',
+    'support_type' => 'सहायता प्रकार',
+    'activation_time' => 'सक्रियण समय',
+    'other_features' => 'अन्य सुविधाएं',
+    'yes' => 'हां',
+    'no' => 'नहीं',
+    'no_additional_features' => 'कोई अतिरिक्त सुविधाएं नहीं।',
+    'added_on' => 'जोड़ा गया',
+    'no_plan_assigned' => 'कोई योजना निर्दिष्ट नहीं',
+    'update_user_information' => 'उपयोगकर्ता जानकारी अपडेट करें',
+    'growth_rate_percent' => 'वृद्धि दर (%)',
+    'update_user' => 'उपयोगकर्ता अपडेट करें',
+    'plans_management_coming_soon' => 'योजना प्रबंधन जल्द ही उपलब्ध होगा।',
+];

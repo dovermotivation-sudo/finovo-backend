@@ -1,0 +1,16 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # ---------------------------------------------
+    # 1. Redirect /clients/public to root domain
+    # ---------------------------------------------
+    RewriteCond %{REQUEST_URI} ^/clients/public
+    RewriteRule ^clients/public/dashboard?(.*)$ /$1 [L,R=301]
+
+    # ---------------------------------------------
+    # 2. Laravel default routing
+    # ---------------------------------------------
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>

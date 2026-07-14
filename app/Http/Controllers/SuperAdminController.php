@@ -1,0 +1,146 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use App\Models\Plan;
+use App\Models\KycDocument;
+use Illuminate\Http\Request;
+
+class SuperAdminController extends Controller
+{
+    // Show admin dashboard with stats
+    public function dashboard()
+    {
+        $data = [
+            'totalUsers' => User::where('role', 'user')->count(),
+            'totalInvestment' => User::where('role', 'user')->sum('portfolio_value'),
+            'totalReturns' => User::where('role', 'user')->sum('total_returns'),
+            'activePlans' => User::where('plan_id', '!=', null)->where('role', 'user')->count(),
+            'recentUsers' => User::where('role', 'user')
+                ->orderBy('created_at', 'desc')
+                ->take(5)
+                ->get(),
+            'topInvestors' => User::where('role', 'user')
+                ->orderBy('portfolio_value', 'desc')
+                ->take(5)
+                ->get(),
+            // KYC Statistics
+            'totalKyc' => KycDocument::count(),
+            'pendingKyc' => KycDocument::where('status', 'pending')->count(),
+            'verifiedKyc' => KycDocument::where('status', 'verified')->count(),
+            'rejectedKyc' => KycDocument::where('status', 'rejected')->count(),
+            'recentKyc' => KycDocument::with('user')
+                ->orderBy('submitted_at', 'desc')
+                ->take(5)
+                ->get()
+        ];
+
+        return view('super-admin.dashboard', $data);
+    }
+    // Show all users with role 'user'
+    public function users()
+    {
+        $users = User::where('role', 'user')->with('plan')->orderBy('created_at', 'desc')->get();
+        return view('super-admin.user', compact('users'));
+    }
+
+    // Show edit form for a specific user
+    public function editUser($id)
+    {
+        $user = User::findOrFail($id);
+
+        if ($user->role !== 'user') {
+            abort(403, 'Unauthorized action.');
+        }
+
+        return view('super-admin.edit-user', compact('user'));
+    }
+
+    // Handle user update request
+    public function updateUser(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        // dd($request->all());
+        if ($user->role !== 'user') {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'portfolio_value' => 'required|numeric',
+            'total_returns' => 'required|numeric',
+            'growth_rate' => 'required|numeric',
+        ]);
+
+        $user->update([
+            'name' => $request->name,
+            'portfolio_value' => $request->portfolio_value,
+            'total_returns' => $request->total_returns,
+            'growth_rate' => $request->growth_rate,
+        ]);
+
+        return redirect()->route('super-admin.users')->with('success', 'User updated successfully.');
+    }
+
+    // Show all plans
+    public function plans()
+    {
+        $plans = Plan::all();
+        return view('super-admin.plans', compact('plans'));
+    }
+
+    // Show edit form for a plan
+    public function editPlan($id)
+    {
+        $plan = Plan::findOrFail($id);
+        return view('super-admin.edit-plan', compact('plan'));
+    }
+
+    // Handle plan update request
+    public function updatePlan(Request $request, $id)
+    {
+        $plan = Plan::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'roi' => 'required|string|max:255',
+            'minimum_investment' => 'required|string|max:255',
+            'risk_level' => 'required|string|max:255',
+            'report_frequency' => 'required|string|max:255',
+            'support_type' => 'required|string|max:255',
+            'activation_time' => 'nullable|string|max:255',
+            'other_features' => 'nullable|string',
+        ]);
+
+        $plan->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'roi' => $request->roi,
+            'minimum_investment' => $request->minimum_investment,
+            'risk_level' => $request->risk_level,
+            'report_frequency' => $request->report_frequency,
+            'support_type' => $request->support_type,
+            'activation_time' => $request->activation_time,
+            'other_features' => $request->other_features,
+        ]);
+
+        return redirect()->route('super-admin.plans')->with('success', 'Plan updated successfully.');
+    }
+
+    // Delete multiple users
+    public function deleteUsers(Request $request)
+    {
+        $request->validate([
+            'users' => 'required|array',
+            'users.*' => 'exists:users,id',
+        ]);
+
+        $deletedCount = User::whereIn('id', $request->users)
+            ->where('role', 'user')
+            ->delete();
+
+        return redirect()->route('super-admin.users')->with('success', $deletedCount . ' user(s) deleted successfully.');
+    }
+}

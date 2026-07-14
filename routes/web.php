@@ -1,0 +1,111 @@
+<?php
+
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SuperAdminController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Mail;
+ 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\KycController;
+use App\Http\Controllers\ReferralController;
+use App\Http\Controllers\Admin\AdminReferralController;
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/crypto', [DashboardController::class, 'crypto'])->name('crypto');
+    Route::get('/derivative', [DashboardController::class, 'derivative'])->name('derivative');
+    Route::get('/fix-flex', [DashboardController::class, 'fixFlex'])->name('fix-flex');
+    Route::get('/compare', [DashboardController::class, 'compare'])->name('compare');
+});
+
+// Language switching route
+Route::post('/language/{locale}', [LanguageController::class, 'switchLanguage'])->name('language.switch');
+
+Route::view('profile', 'profile')
+    ->middleware(['auth'])
+    ->name('profile');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::middleware(['auth', 'super_admin'])->group(function () {
+    Route::get('/super-admin/dashboard', [SuperAdminController::class, 'dashboard'])->name('super-admin.dashboard');
+    Route::get('/super-admin/users', [SuperAdminController::class, 'users'])->name('super-admin.users');
+    Route::get('/super-admin/users/{id}/edit', [SuperAdminController::class, 'editUser'])->name('super-admin.users.edit');
+    Route::post('/super-admin/users/{id}', [SuperAdminController::class, 'updateUser'])->name('super-admin.users.update');
+    Route::delete('/super-admin/users/delete', [SuperAdminController::class, 'deleteUsers'])->name('super-admin.users.delete');
+    Route::get('/super-admin/plans', [SuperAdminController::class, 'plans'])->name('super-admin.plans');
+    Route::get('/super-admin/plans/{id}/edit', [SuperAdminController::class, 'editPlan'])->name('super-admin.plans.edit');
+    Route::post('/super-admin/plans/{id}', [SuperAdminController::class, 'updatePlan'])->name('super-admin.plans.update');
+});
+
+// Root URL → check login
+Route::get('/', function () {
+    if (Auth::check()) {
+        return redirect()->route('user.dashboard');
+    }
+    return redirect()->route('login'); 
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/user/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
+});
+
+// KYC Routes for Users
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/kyc-application', [KycController::class, 'index'])->name('kyc.application');
+    Route::post('/kyc-application', [KycController::class, 'store'])->name('kyc.store');
+    Route::get('/kyc-status', [KycController::class, 'status'])->name('kyc.status');
+    Route::post('/kyc-resubmit', function() {
+        \App\Models\KycDocument::where('user_id', auth()->id())
+            ->where('status', 'rejected')
+            ->delete();
+        return redirect()->route('kyc.application');
+    })->name('kyc.resubmit');
+});
+
+// KYC Routes for Admin
+Route::middleware(['auth', 'super_admin'])->prefix('admin')->group(function () {
+    Route::get('/kyc', [KycController::class, 'adminIndex'])->name('admin.kyc.index');
+    Route::get('/kyc/{id}', [KycController::class, 'adminShow'])->name('admin.kyc.show');
+    Route::post('/kyc/{id}/approve', [KycController::class, 'approve'])->name('admin.kyc.approve');
+    Route::post('/kyc/{id}/reject', [KycController::class, 'reject'])->name('admin.kyc.reject');
+    Route::delete('/kyc/delete', [KycController::class, 'deleteKycDocuments'])->name('admin.kyc.delete');
+});
+
+// Referral Routes for Users
+Route::middleware(['auth', 'verified'])->prefix('referrals')->group(function () {
+    Route::get('/', [ReferralController::class, 'index'])->name('referrals.index');
+    Route::get('/info', [ReferralController::class, 'getReferralInfo'])->name('referrals.info');
+    Route::get('/stats', [ReferralController::class, 'getStats'])->name('referrals.stats');
+    Route::get('/list', [ReferralController::class, 'getReferrals'])->name('referrals.list');
+    Route::get('/rewards', [ReferralController::class, 'getRewards'])->name('referrals.rewards');
+});
+
+// Referral Routes for Admin
+Route::middleware(['auth', 'super_admin'])->prefix('admin/referrals')->group(function () {
+    Route::get('/', [AdminReferralController::class, 'index'])->name('admin.referrals.index');
+    Route::get('/settings', [AdminReferralController::class, 'settings'])->name('admin.referrals.settings');
+    Route::post('/settings', [AdminReferralController::class, 'updateSettings'])->name('admin.referrals.settings.update');
+    Route::get('/{id}', [AdminReferralController::class, 'show'])->name('admin.referrals.show');
+    Route::post('/{id}/process-reward', [AdminReferralController::class, 'processReward'])->name('admin.referrals.process-reward');
+    Route::get('/rewards/list', [AdminReferralController::class, 'rewards'])->name('admin.referrals.rewards');
+    Route::post('/rewards/{id}/credit', [AdminReferralController::class, 'creditReward'])->name('admin.referrals.rewards.credit');
+    Route::post('/rewards/{id}/cancel', [AdminReferralController::class, 'cancelReward'])->name('admin.referrals.rewards.cancel');
+    Route::get('/stats/data', [AdminReferralController::class, 'getStats'])->name('admin.referrals.stats');
+    Route::delete('/delete', [AdminReferralController::class, 'deleteReferrals'])->name('admin.referrals.delete');
+});
+
+require __DIR__.'/auth.php';
