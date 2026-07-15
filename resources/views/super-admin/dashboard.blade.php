@@ -233,6 +233,71 @@
                 </div>
             </div>
 
+            <!-- Deposit & Support Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                <!-- Total Deposited Amount -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Total Deposited</p>
+                            <h3 class="text-2xl font-bold text-green-600">${{ number_format($totalDepositedAmount, 2) }}</h3>
+                        </div>
+                        <div class="p-3 rounded-lg bg-green-50">
+                            <i class="fas fa-coins text-green-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pending Deposits -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Pending Deposits</p>
+                            <h3 class="text-2xl font-bold text-yellow-600">{{ number_format($pendingDeposits) }}</h3>
+                        </div>
+                        <div class="p-3 rounded-lg bg-yellow-50">
+                            <i class="fas fa-wallet text-yellow-600 text-xl"></i>
+                        </div>
+                    </div>
+                    @if($pendingDeposits > 0)
+                    <a href="{{ route('admin.deposits.index') }}" class="mt-2 text-xs text-yellow-600 hover:text-yellow-800 font-medium">
+                        Review Now →
+                    </a>
+                    @endif
+                </div>
+
+                <!-- Total Support Tickets -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Support Tickets</p>
+                            <h3 class="text-2xl font-bold text-blue-600">{{ number_format($totalTickets) }}</h3>
+                        </div>
+                        <div class="p-3 rounded-lg bg-blue-50">
+                            <i class="fas fa-life-ring text-blue-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pending Tickets -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Pending Tickets</p>
+                            <h3 class="text-2xl font-bold text-red-600">{{ number_format($pendingTickets) }}</h3>
+                        </div>
+                        <div class="p-3 rounded-lg bg-red-50">
+                            <i class="fas fa-exclamation-circle text-red-600 text-xl"></i>
+                        </div>
+                    </div>
+                    @if($pendingTickets > 0)
+                    <a href="{{ route('admin.support.index', ['status' => 'open']) }}" class="mt-2 text-xs text-red-600 hover:text-red-800 font-medium">
+                        Reply Now →
+                    </a>
+                    @endif
+                </div>
+            </div>
+
             <!-- Main Content -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <!-- Left Column -->
@@ -347,6 +412,109 @@
                                     @empty
                                     <tr>
                                         <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">No KYC applications found</td>
+                                    </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Recent Deposits -->
+                    <div class="bg-white rounded-xl shadow-sm p-6 mt-6">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-lg font-semibold">Recent Deposits</h3>
+                            <a href="{{ route('admin.deposits.index') }}" class="text-sm text-blue-600 hover:text-blue-800 font-medium">View All</a>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Network</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    @forelse($recentDeposits as $dep)
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                            <div class="font-semibold text-gray-900">{{ $dep->user->name }}</div>
+                                            <div class="text-xs text-gray-500">{{ $dep->user->email }}</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-955">${{ number_format($dep->amount, 2) }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $dep->network }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $dep->created_at->format('M d, Y') }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                                @if($dep->status === 'pending') bg-yellow-100 text-yellow-800
+                                                @elseif($dep->status === 'approved') bg-green-100 text-green-800
+                                                @else bg-red-100 text-red-800
+                                                @endif">
+                                                {{ ucfirst($dep->status) }}
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <a href="{{ route('admin.deposits.show', $dep->id) }}" class="text-blue-600 hover:text-blue-900">
+                                                <i class="fas fa-eye mr-1"></i>View
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    @empty
+                                    <tr>
+                                        <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">No deposits found</td>
+                                    </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Recent Support Tickets -->
+                    <div class="bg-white rounded-xl shadow-sm p-6 mt-6">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-lg font-semibold">Recent Support Tickets</h3>
+                            <a href="{{ route('admin.support.index') }}" class="text-sm text-blue-600 hover:text-blue-800 font-medium">View All</a>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subject</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    @forelse($recentTickets as $ticket)
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                            <div class="font-semibold text-gray-900">{{ $ticket->user->name }}</div>
+                                            <div class="text-xs text-gray-500">{{ $ticket->user->email }}</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">{{ $ticket->subject }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $ticket->created_at->format('M d, Y') }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                                @if($ticket->status === 'open') bg-yellow-100 text-yellow-800
+                                                @else bg-green-100 text-green-800
+                                                @endif">
+                                                {{ ucfirst($ticket->status) }}
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <a href="{{ route('admin.support.show', $ticket->id) }}" class="text-blue-600 hover:text-blue-900">
+                                                <i class="fas fa-reply mr-1"></i>Reply
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    @empty
+                                    <tr>
+                                        <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">No support tickets found</td>
                                     </tr>
                                     @endforelse
                                 </tbody>

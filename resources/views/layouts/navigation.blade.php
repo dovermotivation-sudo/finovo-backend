@@ -123,7 +123,7 @@
                                         <span>{{ __('profile.news') }}</span>
                                     </x-dropdown-link>
                                     
-                                    <x-dropdown-link href="#" class="flex items-center space-x-2">
+                                    <x-dropdown-link :href="route('support.index')" class="flex items-center space-x-2">
                                         <i class="fas fa-life-ring w-4"></i>
                                         <span>{{ __('profile.support') }}</span>
                                     </x-dropdown-link>
@@ -263,6 +263,13 @@
                    class="border-b-2 {{ request()->routeIs('admin.deposits.settings') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
                     <i class="fas fa-cog"></i>
                     <span>Deposit Settings</span>
+                </a>
+
+                <!-- Support Management Link (Super Admin Only) -->
+                <a href="{{ route('admin.support.index') }}" 
+                   class="border-b-2 {{ request()->routeIs('admin.support.*') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
+                    <i class="fas fa-life-ring"></i>
+                    <span>Support Management</span>
                 </a>
                 @endif
             </div>

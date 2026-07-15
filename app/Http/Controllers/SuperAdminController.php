@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Plan;
 use App\Models\KycDocument;
+use App\Models\Deposit;
+use App\Models\SupportTicket;
 use Illuminate\Http\Request;
 
 class SuperAdminController extends Controller
@@ -33,7 +35,25 @@ class SuperAdminController extends Controller
             'recentKyc' => KycDocument::with('user')
                 ->orderBy('submitted_at', 'desc')
                 ->take(5)
-                ->get()
+                ->get(),
+            // Deposit Statistics
+            'totalDeposits' => Deposit::count(),
+            'pendingDeposits' => Deposit::where('status', 'pending')->count(),
+            'approvedDeposits' => Deposit::where('status', 'approved')->count(),
+            'rejectedDeposits' => Deposit::where('status', 'rejected')->count(),
+            'totalDepositedAmount' => Deposit::where('status', 'approved')->sum('amount'),
+            'recentDeposits' => Deposit::with('user')
+                ->orderBy('created_at', 'desc')
+                ->take(5)
+                ->get(),
+            // Support Statistics
+            'totalTickets' => SupportTicket::count(),
+            'pendingTickets' => SupportTicket::where('status', 'open')->count(),
+            'resolvedTickets' => SupportTicket::where('status', 'resolved')->count(),
+            'recentTickets' => SupportTicket::with('user')
+                ->orderBy('created_at', 'desc')
+                ->take(5)
+                ->get(),
         ];
 
         return view('super-admin.dashboard', $data);

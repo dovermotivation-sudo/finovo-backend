@@ -109,14 +109,14 @@
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('dashboard.wallet_details') }}</h3>
                             <p class="text-gray-600 text-sm mb-6">{{ __('dashboard.your_wallet') }}</p>
                             <p class="text-gray-500 text-sm">{{ Auth::user()->email }} <a href="{{ route('profile.edit') }}" class="text-blue-600 hover:text-blue-800 font-medium"><i class="fas fa-edit"></i>{{ __('dashboard.edit') }}</a></p>
-                            <!-- <div class="flex space-x-2 mt-2">
-                                <a href="https://web.whatsapp.com/send?phone=919694552255&text=" class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
-                                    {{ __('dashboard.deposit') }}
+                            <div class="flex space-x-2 mt-4">
+                                <a href="{{ route('deposits.index') }}" class="px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition-colors flex items-center">
+                                    <i class="fas fa-wallet mr-2"></i> Deposit
                                 </a>
-                                <a href="https://web.whatsapp.com/send?phone=919694552255&text=" class="px-4 py-2 border border-green-500 text-green-600 text-sm font-medium rounded-lg hover:bg-green-50 transition-colors">
-                                    {{ __('dashboard.withdraw') }}
+                                <a href="{{ route('support.index') }}" class="px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-700 transition-colors flex items-center">
+                                    <i class="fas fa-life-ring mr-2"></i> Support
                                 </a>
-                            </div> -->
+                            </div>
                         </div>
                     </div>
                 </div>

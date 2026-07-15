@@ -13,6 +13,8 @@ use App\Http\Controllers\ReferralController;
 use App\Http\Controllers\Admin\AdminReferralController;
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\Admin\AdminDepositController;
+use App\Http\Controllers\SupportTicketController;
+use App\Http\Controllers\Admin\AdminSupportController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -101,6 +103,20 @@ Route::middleware(['auth', 'super_admin'])->prefix('admin')->group(function () {
     Route::post('/deposits/{id}/reject', [AdminDepositController::class, 'reject'])->name('admin.deposits.reject');
     Route::get('/deposit-settings', [AdminDepositController::class, 'settings'])->name('admin.deposits.settings');
     Route::post('/deposit-settings', [AdminDepositController::class, 'updateSettings'])->name('admin.deposits.settings.update');
+});
+
+// Support Ticket Routes for Users
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/support', [SupportTicketController::class, 'index'])->name('support.index');
+    Route::post('/support', [SupportTicketController::class, 'store'])->name('support.store');
+    Route::get('/support/{id}', [SupportTicketController::class, 'show'])->name('support.show');
+});
+
+// Support Ticket Routes for Admin
+Route::middleware(['auth', 'super_admin'])->prefix('admin')->group(function () {
+    Route::get('/support', [AdminSupportController::class, 'index'])->name('admin.support.index');
+    Route::get('/support/{id}', [AdminSupportController::class, 'show'])->name('admin.support.show');
+    Route::post('/support/{id}/reply', [AdminSupportController::class, 'reply'])->name('admin.support.reply');
 });
 
 // Referral Routes for Users
