@@ -112,6 +112,11 @@
                                         <i class="fas fa-wallet w-4 text-blue-500"></i>
                                         <span class="font-semibold text-blue-600">{{ __('profile.deposit_funds') }}</span>
                                     </x-dropdown-link>
+
+                                    <x-dropdown-link :href="route('withdrawals.index')" class="flex items-center space-x-2">
+                                        <i class="fas fa-hand-holding-usd w-4 text-red-500"></i>
+                                        <span class="font-semibold text-red-600">{{ __('profile.withdraw_balance') }}</span>
+                                    </x-dropdown-link>
                                     
                                     <x-dropdown-link href="#" class="flex items-center space-x-2">
                                         <i class="fas fa-chart-line w-4"></i>
@@ -258,6 +263,13 @@
                     <span>Deposit Management</span>
                 </a>
 
+                <!-- Withdrawals Management Link (Super Admin Only) -->
+                <a href="{{ route('admin.withdrawals.index') }}" 
+                   class="border-b-2 {{ request()->routeIs('admin.withdrawals.*') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    <span>Withdrawal Management</span>
+                </a>
+
                 <!-- Deposit Settings Link (Super Admin Only) -->
                 <a href="{{ route('admin.deposits.settings') }}" 
                    class="border-b-2 {{ request()->routeIs('admin.deposits.settings') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
@@ -270,6 +282,13 @@
                    class="border-b-2 {{ request()->routeIs('admin.support.*') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
                     <i class="fas fa-life-ring"></i>
                     <span>Support Management</span>
+                </a>
+
+                <!-- MT5 Connections Link (Super Admin Only) -->
+                <a href="{{ route('admin.mt5.index') }}" 
+                   class="border-b-2 {{ request()->routeIs('admin.mt5.*') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
+                    <i class="fas fa-server"></i>
+                    <span>MT5 Connections</span>
                 </a>
                 @endif
             </div>

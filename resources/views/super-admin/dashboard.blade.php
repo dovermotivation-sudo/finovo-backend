@@ -233,7 +233,7 @@
                 </div>
             </div>
 
-            <!-- Deposit & Support Stats Cards -->
+            <!-- Deposit & Withdrawal Stats Cards -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
                 <!-- Total Deposited Amount -->
                 <div class="bg-white rounded-xl shadow-sm p-6">
@@ -266,6 +266,40 @@
                     @endif
                 </div>
 
+                <!-- Total Withdrawn Amount -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Total Withdrawn</p>
+                            <h3 class="text-2xl font-bold text-red-600">${{ number_format($totalWithdrawnAmount, 2) }}</h3>
+                        </div>
+                        <div class="p-3 rounded-lg bg-red-50">
+                            <i class="fas fa-hand-holding-usd text-red-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pending Withdrawals -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Pending Withdrawals</p>
+                            <h3 class="text-2xl font-bold text-yellow-600">{{ number_format($pendingWithdrawals) }}</h3>
+                        </div>
+                        <div class="p-3 rounded-lg bg-yellow-50">
+                            <i class="fas fa-hand-holding-usd text-yellow-600 text-xl"></i>
+                        </div>
+                    </div>
+                    @if($pendingWithdrawals > 0)
+                    <a href="{{ route('admin.withdrawals.index') }}" class="mt-2 text-xs text-yellow-600 hover:text-yellow-800 font-medium">
+                        Review Now →
+                    </a>
+                    @endif
+                </div>
+            </div>
+
+            <!-- Support Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <!-- Total Support Tickets -->
                 <div class="bg-white rounded-xl shadow-sm p-6">
                     <div class="flex items-center justify-between">
@@ -465,6 +499,62 @@
                                     @empty
                                     <tr>
                                         <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">No deposits found</td>
+                                    </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Recent Withdrawals -->
+                    <div class="bg-white rounded-xl shadow-sm p-6 mt-6">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-lg font-semibold">Recent Withdrawals</h3>
+                            <a href="{{ route('admin.withdrawals.index') }}" class="text-sm text-blue-600 hover:text-blue-800 font-medium">View All</a>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Network</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    @forelse($recentWithdrawals as $wth)
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                            <div class="font-semibold text-gray-900">{{ $wth->user->name }}</div>
+                                            <div class="text-xs text-gray-500">{{ $wth->user->email }}</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                            <div class="font-bold text-gray-900">${{ number_format($wth->amount, 2) }}</div>
+                                            <div class="text-xs text-gray-500">+ ${{ number_format($wth->fee, 2) }} fee</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $wth->network }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $wth->created_at->format('M d, Y') }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                                @if($wth->status === 'pending') bg-yellow-100 text-yellow-800
+                                                @elseif($wth->status === 'approved') bg-green-100 text-green-800
+                                                @else bg-red-100 text-red-800
+                                                @endif">
+                                                {{ ucfirst($wth->status) }}
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <a href="{{ route('admin.withdrawals.show', $wth->id) }}" class="text-blue-600 hover:text-blue-900">
+                                                <i class="fas fa-eye mr-1"></i>View
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    @empty
+                                    <tr>
+                                        <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">No withdrawals found</td>
                                     </tr>
                                     @endforelse
                                 </tbody>

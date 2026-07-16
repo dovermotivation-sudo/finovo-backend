@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Plan;
 use App\Models\KycDocument;
 use App\Models\Deposit;
+use App\Models\Withdrawal;
 use App\Models\SupportTicket;
 use Illuminate\Http\Request;
 
@@ -43,6 +44,16 @@ class SuperAdminController extends Controller
             'rejectedDeposits' => Deposit::where('status', 'rejected')->count(),
             'totalDepositedAmount' => Deposit::where('status', 'approved')->sum('amount'),
             'recentDeposits' => Deposit::with('user')
+                ->orderBy('created_at', 'desc')
+                ->take(5)
+                ->get(),
+            // Withdrawal Statistics
+            'totalWithdrawals' => Withdrawal::count(),
+            'pendingWithdrawals' => Withdrawal::where('status', 'pending')->count(),
+            'approvedWithdrawals' => Withdrawal::where('status', 'approved')->count(),
+            'rejectedWithdrawals' => Withdrawal::where('status', 'rejected')->count(),
+            'totalWithdrawnAmount' => Withdrawal::where('status', 'approved')->sum('amount'),
+            'recentWithdrawals' => Withdrawal::with('user')
                 ->orderBy('created_at', 'desc')
                 ->take(5)
                 ->get(),

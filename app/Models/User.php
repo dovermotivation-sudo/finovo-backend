@@ -249,4 +249,12 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->referralRewards()->where('status', 'credited')->sum('reward_amount');
     }
 
+    /**
+     * Get the MT5 account associated with the user.
+     */
+    public function mt5Account()
+    {
+        return $this->hasOne(Mt5Account::class);
+    }
+
 }

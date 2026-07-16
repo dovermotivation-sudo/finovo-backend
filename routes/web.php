@@ -13,6 +13,8 @@ use App\Http\Controllers\ReferralController;
 use App\Http\Controllers\Admin\AdminReferralController;
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\Admin\AdminDepositController;
+use App\Http\Controllers\WithdrawalController;
+use App\Http\Controllers\Admin\AdminWithdrawalController;
 use App\Http\Controllers\SupportTicketController;
 use App\Http\Controllers\Admin\AdminSupportController;
 
@@ -86,6 +88,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/deposits', [DepositController::class, 'store'])->name('deposits.store');
 });
 
+// Withdrawals Routes for Users
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/withdrawals', [WithdrawalController::class, 'index'])->name('withdrawals.index');
+    Route::post('/withdrawals', [WithdrawalController::class, 'store'])->name('withdrawals.store');
+});
+
 // KYC Routes for Admin
 Route::middleware(['auth', 'super_admin'])->prefix('admin')->group(function () {
     Route::get('/kyc', [KycController::class, 'adminIndex'])->name('admin.kyc.index');
@@ -103,6 +111,14 @@ Route::middleware(['auth', 'super_admin'])->prefix('admin')->group(function () {
     Route::post('/deposits/{id}/reject', [AdminDepositController::class, 'reject'])->name('admin.deposits.reject');
     Route::get('/deposit-settings', [AdminDepositController::class, 'settings'])->name('admin.deposits.settings');
     Route::post('/deposit-settings', [AdminDepositController::class, 'updateSettings'])->name('admin.deposits.settings.update');
+});
+
+// Withdrawals Routes for Admin
+Route::middleware(['auth', 'super_admin'])->prefix('admin')->group(function () {
+    Route::get('/withdrawals', [AdminWithdrawalController::class, 'index'])->name('admin.withdrawals.index');
+    Route::get('/withdrawals/{id}', [AdminWithdrawalController::class, 'show'])->name('admin.withdrawals.show');
+    Route::post('/withdrawals/{id}/approve', [AdminWithdrawalController::class, 'approve'])->name('admin.withdrawals.approve');
+    Route::post('/withdrawals/{id}/reject', [AdminWithdrawalController::class, 'reject'])->name('admin.withdrawals.reject');
 });
 
 // Support Ticket Routes for Users
@@ -140,6 +156,13 @@ Route::middleware(['auth', 'super_admin'])->prefix('admin/referrals')->group(fun
     Route::post('/rewards/{id}/cancel', [AdminReferralController::class, 'cancelReward'])->name('admin.referrals.rewards.cancel');
     Route::get('/stats/data', [AdminReferralController::class, 'getStats'])->name('admin.referrals.stats');
     Route::delete('/delete', [AdminReferralController::class, 'deleteReferrals'])->name('admin.referrals.delete');
+});
+
+// MT5 Routes for Admin
+Route::middleware(['auth', 'super_admin'])->prefix('admin')->group(function () {
+    Route::get('/mt5', [\App\Http\Controllers\Admin\AdminMt5Controller::class, 'index'])->name('admin.mt5.index');
+    Route::get('/mt5/{id}', [\App\Http\Controllers\Admin\AdminMt5Controller::class, 'show'])->name('admin.mt5.show');
+    Route::post('/mt5/{id}/attach', [\App\Http\Controllers\Admin\AdminMt5Controller::class, 'attach'])->name('admin.mt5.attach');
 });
 
 require __DIR__.'/auth.php';

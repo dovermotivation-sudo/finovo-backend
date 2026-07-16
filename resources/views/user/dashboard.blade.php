@@ -113,6 +113,9 @@
                                 <a href="{{ route('deposits.index') }}" class="px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition-colors flex items-center">
                                     <i class="fas fa-wallet mr-2"></i> Deposit
                                 </a>
+                                <a href="{{ route('withdrawals.index') }}" class="px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition-colors flex items-center">
+                                    <i class="fas fa-hand-holding-usd mr-2"></i> Withdraw
+                                </a>
                                 <a href="{{ route('support.index') }}" class="px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-700 transition-colors flex items-center">
                                     <i class="fas fa-life-ring mr-2"></i> Support
                                 </a>
