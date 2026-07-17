@@ -1,11 +1,11 @@
 <x-guest-layout>
-    <div class="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
+    <div class="py-6 flex items-center justify-center px-4 sm:px-6 lg:px-8">
         <div class="max-w-5xl w-full bg-white rounded-xl shadow-xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
 
             <!-- Left Side - Register Form -->
             <div class="p-8">
                 <h2 class="text-2xl font-bold text-gray-900 mb-2">Register Account</h2>
-                <p class="text-gray-600 mb-6">Create your account to access the Finovo Investment panel.</p>
+                <p class="text-gray-600 mb-6">Create your account to access the Finovo panel.</p>
 
                 @if ($errors->any())
                     <div class="mb-4 bg-red-50 border-l-4 border-red-400 p-4 rounded">
@@ -110,11 +110,11 @@
                 <div class="flex justify-center mb-4">
                     <img src="{{ asset('image/register.png') }}" alt="Security Illustration" class="w-64 h-64">
                 </div>
-                <h3 class="text-xl font-bold text-gray-900">Finovo Investment</h3>
+                <h3 class="text-xl font-bold text-gray-900">Finovo</h3>
                 <p class="text-gray-600">
-                    Finovo Trading is a trusted bot provider giving you access to institutional-grade, automated trading systems. With expert support and intuitive features, we help you succeed in any market with confidence.
+                    Finovo is a trusted bot provider giving you access to institutional-grade, automated trading systems. With expert support and intuitive features, we help you succeed in any market with confidence.
                 </p>
-                <p class="text-indigo-700 font-semibold">Join Finovo Investment today and take control of your financial future.</p>
+                <p class="text-indigo-700 font-semibold">Join Finovo today and take control of your financial future.</p>
             </div>
         </div>
     </div>

@@ -8,7 +8,7 @@
                 <!-- Title & Subtitle -->
                 <h2 class="text-xl font-semibold text-gray-800 mb-2">Sign-In</h2>
                 <p class="text-sm text-gray-500 mb-6">
-                    Access the Finovo Investment panel using your email and password.
+                    Access the Finovo panel using your email and password.
                 </p>
 
                 <!-- Session Status -->
@@ -88,7 +88,7 @@
 
                 <!-- Footer Note -->
                 <p class="text-center text-xs text-gray-400 mt-2">
-                    © 2026 Finovo Investment. All Rights Reserved.
+                    © 2026 Finovo. All Rights Reserved.
                 </p>
             </div>
         </div>
@@ -98,12 +98,12 @@
             <div class="flex justify-center mb-6">
                 <img src="{{ asset('image/login.png') }}" alt="Security Illustration" class="w-64 h-64">
             </div>
-            <h3 class="text-xl font-bold text-gray-900">Finovo Investment</h3>
+            <h3 class="text-xl font-bold text-gray-900">Finovo</h3>
             <p class="text-gray-600 max-w-md mx-auto">
-              Finovo Trading is a trusted bot provider giving you access to institutional-grade, automated trading systems. With expert support and intuitive features, we help you succeed in any market with confidence.
+              Finovo is a trusted bot provider giving you access to institutional-grade, automated trading systems. With expert support and intuitive features, we help you succeed in any market with confidence.
             </p>
             <p class="text-indigo-700 font-semibold mt-4">
-                Join Finovo Investment today and take control of your financial future.
+                Join Finovo today and take control of your financial future.
             </p>
         </div>
 

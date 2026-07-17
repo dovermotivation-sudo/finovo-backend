@@ -311,13 +311,13 @@
 
         function shareWhatsApp() {
             const link = document.getElementById('referralLink').textContent;
-            const text = `Join Finovo Investments using my referral link and start your investment journey! ${link}`;
+            const text = `Join Finovo using my referral link and start your investment journey! ${link}`;
             window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
         }
 
         function shareTwitter() {
             const link = document.getElementById('referralLink').textContent;
-            const text = `Join Finovo Investments using my referral link and start your investment journey!`;
+            const text = `Join Finovo using my referral link and start your investment journey!`;
             window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(link)}`, '_blank');
         }
 
@@ -328,8 +328,8 @@
 
         function shareEmail() {
             const link = document.getElementById('referralLink').textContent;
-            const subject = 'Join Finovo Investments - Investment Platform';
-            const body = `Hi,\\n\\nI'd like to invite you to join Finovo Investments, an amazing investment platform.\\n\\nUse my referral link to get started: ${link}\\n\\nLooking forward to seeing you there!`;
+            const subject = 'Join Finovo - Investment Platform';
+            const body = `Hi,\\n\\nI'd like to invite you to join Finovo, an amazing investment platform.\\n\\nUse my referral link to get started: ${link}\\n\\nLooking forward to seeing you there!`;
             window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         }
 

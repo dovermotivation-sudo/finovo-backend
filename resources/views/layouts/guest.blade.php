@@ -16,9 +16,9 @@
 </head>
 <body class="font-sans text-gray-900 antialiased bg-gray-50">
     <div class="min-h-screen flex flex-col items-center justify-center" style="background-color: #efefef">
-        <div class="text-center mb-6">
+        <div class="text-center" style="margin-bottom: 3px;">
             <a href="/" class="flex justify-center">
-                <img src="{{ asset('logo/finovo-logo.png') }}" alt="Finovo Logo" class="h-16 w-auto" style="margin-top: 20px">
+                <img src="{{ asset('logo/finovo-logo.png') }}" alt="Finovo Logo" class="h-32 w-auto" style="margin-top: 0px">
             </a>
         </div>
 
