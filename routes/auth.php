@@ -23,6 +23,9 @@ Route::middleware(['guest'])->group(function () {
         
     Route::post('verify-otp/resend', [VerifyOtpController::class, 'resend'])
         ->name('verification.resend');
+        
+    Route::post('verify-otp/change-email', [VerifyOtpController::class, 'changeEmail'])
+        ->name('verification.change-email');
 });
 
 Route::middleware('guest')->group(function () {

@@ -81,4 +81,27 @@ class VerifyOtpController extends Controller
 
         return back()->with('status', 'A new OTP has been sent to your email address.');
     }
+
+    /**
+     * Change the email address.
+     */
+    public function changeEmail(Request $request)
+    {
+        if (!Session::has('otp_user_id')) {
+            return redirect()->route('login')->with('error', 'Invalid OTP verification request.');
+        }
+
+        $request->validate([
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+        ]);
+
+        $user = User::findOrFail(Session::get('otp_user_id'));
+        $user->email = $request->email;
+        $user->save();
+
+        // Send a new OTP to the new email
+        $user->sendOtpNotification();
+
+        return back()->with('status', 'Your email address has been updated and a new OTP has been sent.');
+    }
 }

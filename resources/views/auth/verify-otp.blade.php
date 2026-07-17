@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="py-8 bg-gray-50 min-h-screen flex items-center justify-center">
-        <div class="max-w-md w-full bg-white rounded-xl shadow-sm p-8">
+        <div class="max-w-md w-full bg-white rounded-xl shadow-sm p-8" x-data="{ showChangeEmail: false }">
             <div class="mb-6 text-center">
                 <h2 class="text-2xl font-bold text-gray-900">Verify Your Email</h2>
                 <p class="mt-2 text-sm text-gray-600">
@@ -20,7 +20,8 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('verification.verify') }}" class="space-y-6">
+            <!-- OTP Verification Form -->
+            <form method="POST" action="{{ route('verification.verify') }}" class="space-y-6" x-show="!showChangeEmail">
                 @csrf
 
                 <!-- OTP Input -->
@@ -41,18 +42,53 @@
                     <x-input-error :messages="$errors->get('otp')" class="mt-2" />
                 </div>
 
+                <div class="flex flex-col space-y-4">
+                    <div class="flex items-center justify-between">
+                        <x-primary-button type="submit">
+                            {{ __('Verify') }}
+                        </x-primary-button>
+
+                        <a 
+                            href="{{ route('verification.resend') }}" 
+                            class="text-sm text-indigo-600 hover:text-indigo-500"
+                            onclick="event.preventDefault(); document.getElementById('resend-form').submit();"
+                        >
+                            {{ __('Resend Code') }}
+                        </a>
+                    </div>
+                    
+                    <div class="text-center mt-4 pt-4 border-t border-gray-100">
+                        <button type="button" @click="showChangeEmail = true" class="text-sm text-gray-500 hover:text-gray-700 underline">
+                            Entered the wrong email? Change it here
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Change Email Form -->
+            <form method="POST" action="{{ route('verification.change-email') }}" class="space-y-6" x-show="showChangeEmail" style="display: none;">
+                @csrf
+
+                <div>
+                    <x-input-label for="email" :value="__('New Email Address')" />
+                    <x-text-input
+                        id="email"
+                        class="block mt-1 w-full"
+                        type="email"
+                        name="email"
+                        required
+                    />
+                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                </div>
+
                 <div class="flex items-center justify-between">
                     <x-primary-button type="submit">
-                        {{ __('Verify') }}
+                        {{ __('Update & Resend OTP') }}
                     </x-primary-button>
 
-                    <a 
-                        href="{{ route('verification.resend') }}" 
-                        class="text-sm text-indigo-600 hover:text-indigo-500"
-                        onclick="event.preventDefault(); document.getElementById('resend-form').submit();"
-                    >
-                        {{ __('Resend Code') }}
-                    </a>
+                    <button type="button" @click="showChangeEmail = false" class="text-sm text-gray-500 hover:text-gray-700">
+                        {{ __('Cancel') }}
+                    </button>
                 </div>
             </form>
 
@@ -60,7 +96,6 @@
             <form id="resend-form" action="{{ route('verification.resend') }}" method="POST" class="hidden">
                 @csrf
             </form>
-
             
         </div>
     </div>
