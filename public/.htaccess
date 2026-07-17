@@ -3,6 +3,12 @@
         Options -MultiViews -Indexes
     </IfModule>
 
+    # Disable LiteSpeed Cache for Laravel to prevent CSRF caching issues
+    <IfModule Litespeed>
+        RewriteEngine On
+        RewriteRule .* - [E=Cache-Control:no-cache]
+    </IfModule>
+
     RewriteEngine On
 
     # Handle Authorization Header
