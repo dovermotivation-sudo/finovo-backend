@@ -43,6 +43,20 @@ class UserController extends Controller
             }
         }
 
-        return view('user.dashboard', compact('user', 'labels', 'values'));
+        // Compute total returns dynamically from all history
+        $allRecords = DailyReturn::where('user_id', $user->id)->get();
+        $computedTotalReturns = 0;
+
+        foreach ($allRecords as $r) {
+            $sign = $r->return_percentage >= 0 ? 1 : -1;
+            $computedTotalReturns += $sign * $r->return_amount;
+        }
+
+        // Calculate growth rate from total deposits
+        $computedGrowthRate = $user->portfolio_value > 0 
+            ? ($computedTotalReturns / $user->portfolio_value) * 100 
+            : 0;
+
+        return view('user.dashboard', compact('user', 'labels', 'values', 'computedTotalReturns', 'computedGrowthRate'));
     }
 }

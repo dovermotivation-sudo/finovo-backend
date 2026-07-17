@@ -96,31 +96,38 @@
             <!-- Top Row -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
                 <!-- User Profile Card -->
-                <div class="bg-white rounded-xl shadow-sm p-6">
-                    <div class="flex items-center space-x-4">
-                        @if(Auth::user()->profile_image_url)
-                            <img src="{{ Auth::user()->profile_image_url }}" alt="Profile" class="h-16 w-16 rounded-full object-cover border-2 border-gray-200">
-                        @else
-                            <div class="h-16 w-16 rounded-full bg-blue-500 flex items-center justify-center text-white text-xl font-bold">
-                                {{ Auth::user()->initials }}
-                            </div>
-                        @endif
-                        <div>
-                            <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('dashboard.wallet_details') }}</h3>
-                            <p class="text-gray-600 text-sm mb-6">{{ __('dashboard.your_wallet') }}</p>
-                            <p class="text-gray-500 text-sm">{{ Auth::user()->email }} <a href="{{ route('profile.edit') }}" class="text-blue-600 hover:text-blue-800 font-medium"><i class="fas fa-edit"></i>{{ __('dashboard.edit') }}</a></p>
-                            <div class="flex space-x-2 mt-4">
-                                <a href="{{ route('deposits.index') }}" class="px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition-colors flex items-center">
-                                    <i class="fas fa-wallet mr-2"></i> Deposit
-                                </a>
-                                <a href="{{ route('withdrawals.index') }}" class="px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition-colors flex items-center">
-                                    <i class="fas fa-hand-holding-usd mr-2"></i> Withdraw
-                                </a>
-                                <a href="{{ route('support.index') }}" class="px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-700 transition-colors flex items-center">
-                                    <i class="fas fa-life-ring mr-2"></i> Support
-                                </a>
+                <div class="bg-white rounded-xl shadow-sm p-6 flex flex-col h-full justify-between">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-5">{{ __('dashboard.wallet_details') }}</h3>
+                        
+                        <div class="flex items-center space-x-3 mb-4">
+                            @if(Auth::user()->profile_image_url)
+                                <img src="{{ Auth::user()->profile_image_url }}" alt="Profile" class="h-12 w-12 rounded-full object-cover border-2 border-gray-200 flex-shrink-0">
+                            @else
+                                <div class="h-12 w-12 rounded-full bg-blue-500 flex items-center justify-center text-white text-lg font-bold flex-shrink-0">
+                                    {{ Auth::user()->initials }}
+                                </div>
+                            @endif
+                            
+                            <div class="overflow-hidden">
+                                <p class="text-gray-900 font-medium truncate">{{ __('dashboard.your_wallet') }}</p>
+                                <p class="text-gray-500 text-sm truncate">{{ Auth::user()->email }} 
+                                    <a href="{{ route('profile.edit') }}" class="text-blue-600 hover:text-blue-800 ml-1" title="Edit Profile"><i class="fas fa-edit"></i></a>
+                                </p>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-2 mt-4">
+                        <a href="{{ route('deposits.index') }}" class="py-2 px-1 bg-blue-600 text-white text-xs sm:text-sm font-semibold rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center text-center">
+                            <i class="fas fa-wallet mr-1.5 hidden sm:inline-block"></i> Deposit
+                        </a>
+                        <a href="{{ route('withdrawals.index') }}" class="py-2 px-1 bg-red-600 text-white text-xs sm:text-sm font-semibold rounded-lg hover:bg-red-700 transition-colors flex items-center justify-center text-center">
+                            <i class="fas fa-hand-holding-usd mr-1.5 hidden sm:inline-block"></i> Withdraw
+                        </a>
+                        <a href="{{ route('support.index') }}" class="py-2 px-1 bg-indigo-600 text-white text-xs sm:text-sm font-semibold rounded-lg hover:bg-indigo-700 transition-colors flex items-center justify-center text-center">
+                            <i class="fas fa-life-ring mr-1.5 hidden sm:inline-block"></i> Support
+                        </a>
                     </div>
                 </div>
 
@@ -132,16 +139,16 @@
                     </div>
                     <div class="bg-green-50 p-4 rounded-xl">
                         <p class="text-sm text-gray-500 mb-1">Growth Rate</p>
-                        <p class="text-xl font-bold">{{ number_format($user->total_returns, 2) }}%</p>
+                        <p class="text-xl font-bold {{ $computedGrowthRate >= 0 ? 'text-green-600' : 'text-red-600' }}">{{ $computedGrowthRate >= 0 ? '+' : '' }}{{ number_format($computedGrowthRate, 2) }}%</p>
                     </div>
                     <div class="bg-yellow-50 p-4 rounded-xl">
                         <p class="text-sm text-gray-500 mb-1">Total Returns</p>
-                        <p class="text-xl font-bold">${{ number_format($user->growth_rate, 2) }}</p>
+                        <p class="text-xl font-bold {{ $computedTotalReturns >= 0 ? 'text-green-600' : 'text-red-600' }}">{{ $computedTotalReturns >= 0 ? '+$' : '-$' }}{{ number_format(abs($computedTotalReturns), 2) }}</p>
                     </div>
                 </div>
             </div>
 
-            @if($user->portfolio_value == 0 && $user->total_returns == 0 && $user->growth_rate == 0)
+            @if($user->portfolio_value == 0 && $computedTotalReturns == 0 && $computedGrowthRate == 0)
                 <!-- No Data Message -->
                 <div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-lg shadow-md mb-6">
                     <div class="flex items-center">
@@ -177,11 +184,11 @@
                                 <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
                                     <div>
                                         <p class="text-sm text-gray-500">Total Amount</p>
-                                        <p class="text-xl font-bold">${{ number_format($user->portfolio_value, 2) }} <span class="text-green-500 text-sm">+{{ number_format($user->growth_rate, 2) }}%</span></p>
+                                        <p class="text-xl font-bold">${{ number_format($user->portfolio_value, 2) }} <span class="{{ $computedGrowthRate >= 0 ? 'text-green-500' : 'text-red-500' }} text-sm">{{ $computedGrowthRate >= 0 ? '+' : '' }}{{ number_format($computedGrowthRate, 2) }}%</span></p>
                                     </div>
                                     <div class="text-right">
                                         <p class="text-sm text-gray-500">Current Value</p>
-                                        <p class="text-lg font-semibold">${{ number_format($user->portfolio_value + $user->total_returns, 2) }}</p>
+                                        <p class="text-lg font-semibold">${{ number_format($user->portfolio_value + $computedTotalReturns, 2) }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -189,7 +196,7 @@
                             <!-- Six Months Tab Content -->
                             <div id="six-months-content" class="tab-content space-y-4 hidden">
                                 @php
-                                    $monthlyProfit = $user->portfolio_value * $user->growth_rate / 100; // Monthly profit
+                                    $monthlyProfit = $user->portfolio_value * $computedGrowthRate / 100; // Monthly profit
                                     $sixMonthProfit = $monthlyProfit * 6; // 6 months of profit
                                     $sixMonthValue = $user->portfolio_value + $sixMonthProfit; // Total after 6 months
                                 @endphp
@@ -200,14 +207,14 @@
                                     </div>
                                     <div class="text-right">
                                         <p class="text-sm text-gray-500">Growth Rate (6 Months)</p>
-                                        <p class="text-lg font-semibold">{{ number_format($user->growth_rate * 6, 2) }}%</p>
+                                        <p class="text-lg font-semibold">{{ $computedGrowthRate * 6 >= 0 ? '+' : '' }}{{ number_format($computedGrowthRate * 6, 2) }}%</p>
                                     </div>
                                 </div>
                                 <div class="p-4 bg-green-50 rounded-lg">
                                     <p class="text-sm text-gray-500">Total Profit (6 Months)</p>
                                     <div class="flex justify-between items-center">
                                         <p class="text-xl font-bold">${{ number_format($sixMonthProfit, 2) }}</p>
-                                        <span class="text-green-500 font-medium">+{{ number_format($user->growth_rate * 6, 2) }}%</span>
+                                        <span class="{{ $computedGrowthRate >= 0 ? 'text-green-500' : 'text-red-500' }} font-medium">{{ $computedGrowthRate >= 0 ? '+' : '' }}{{ number_format($computedGrowthRate * 6, 2) }}%</span>
                                     </div>
                                 </div>
                                 <div class="p-4 bg-indigo-50 rounded-lg">
@@ -222,7 +229,7 @@
                             <!-- One Year Tab Content -->
                             <div id="one-year-content" class="tab-content space-y-4 hidden">
                                 @php
-                                    $monthlyProfit = $user->portfolio_value * $user->growth_rate / 100; // Monthly profit
+                                    $monthlyProfit = $user->portfolio_value * $computedGrowthRate / 100; // Monthly profit
                                     $oneYearProfit = $monthlyProfit * 12; // 12 months of profit
                                     $oneYearValue = $user->portfolio_value + $oneYearProfit; // Total after 1 year
                                     $quarterlyProfit = $monthlyProfit * 3; // 3 months profit
@@ -234,14 +241,14 @@
                                     </div>
                                     <div class="text-right">
                                         <p class="text-sm text-gray-500">Growth Rate (1 Year)</p>
-                                        <p class="text-lg font-semibold">{{ number_format($user->growth_rate * 12, 2) }}%</p>
+                                        <p class="text-lg font-semibold">{{ $computedGrowthRate * 12 >= 0 ? '+' : '' }}{{ number_format($computedGrowthRate * 12, 2) }}%</p>
                                     </div>
                                 </div>
                                 <div class="p-4 bg-sky-50 rounded-lg">
                                     <p class="text-sm text-gray-500">Total Profit (1 Year)</p>
                                     <div class="flex justify-between items-center">
                                         <p class="text-xl font-bold">${{ number_format($oneYearProfit, 2) }}</p>
-                                        <span class="text-green-500 font-medium">+{{ number_format($user->growth_rate * 12, 2) }}%</span>
+                                        <span class="{{ $computedGrowthRate >= 0 ? 'text-green-500' : 'text-red-500' }} font-medium">{{ $computedGrowthRate >= 0 ? '+' : '' }}{{ number_format($computedGrowthRate * 12, 2) }}%</span>
                                     </div>
                                 </div>
                                 <div class="p-4 bg-indigo-50 rounded-lg">
