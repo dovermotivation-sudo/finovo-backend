@@ -40,14 +40,29 @@ class ApiController extends Controller
             $user = User::find($update['user_id']);
             if (!$user) continue;
             
-            DailyReturn::updateOrCreate(
-                ['user_id' => $user->id, 'return_date' => $date],
-                [
-                    'return_percentage' => $update['percentage'],
-                    'return_amount'     => round($user->portfolio_value * abs($update['percentage']) / 100, 2),
-                    'notes'             => $update['note'] ?? 'Updated via API',
-                ]
-            );
+            $amount = round($user->portfolio_value * ($update['percentage'] / 100), 2);
+            
+            $dailyReturn = DailyReturn::firstOrNew(['user_id' => $user->id, 'return_date' => $date]);
+            
+            // If it exists, back out the old amount from portfolio
+            if ($dailyReturn->exists) {
+                $oldSign = $dailyReturn->return_percentage >= 0 ? 1 : -1;
+                $oldAmount = $oldSign * $dailyReturn->return_amount;
+                $user->portfolio_value -= $oldAmount;
+                $user->total_returns -= $oldAmount;
+            }
+            
+            // Save the new daily return
+            $dailyReturn->return_percentage = $update['percentage'];
+            $dailyReturn->return_amount = abs($amount);
+            $dailyReturn->notes = $update['note'] ?? 'Updated via API';
+            $dailyReturn->save();
+            
+            // Add the new amount to user's balances
+            $user->portfolio_value += $amount;
+            $user->total_returns += $amount;
+            $user->save();
+
             $processed++;
         }
 
