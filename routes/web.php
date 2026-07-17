@@ -18,9 +18,6 @@ use App\Http\Controllers\Admin\AdminWithdrawalController;
 use App\Http\Controllers\SupportTicketController;
 use App\Http\Controllers\Admin\AdminSupportController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::get('/dashboard', function () {
     if (Auth::check() && Auth::user()->role === 'super_admin') {
