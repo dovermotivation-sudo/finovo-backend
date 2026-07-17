@@ -629,6 +629,24 @@
                         </a>
                     </div>
 
+                    <!-- Global Settings -->
+                    <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-lg font-semibold">Global Settings</h3>
+                        </div>
+                        <form action="{{ route('super-admin.settings.update') }}" method="POST">
+                            @csrf
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Global Max Daily Return (%)</label>
+                                <p class="text-xs text-gray-500 mb-2">Caps the daily return displayed to users. (Does not affect actual stored data).</p>
+                                <input type="number" step="0.01" name="global_max_daily_return" value="{{ $globalMaxDailyReturn ?? '5.00' }}" class="w-full p-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                            </div>
+                            <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-lg font-medium hover:bg-indigo-700 transition-colors">
+                                Save Settings
+                            </button>
+                        </form>
+                    </div>
+
                     <!-- Top Investors -->
                     <div class="bg-white rounded-xl shadow-sm p-6">
                         <div class="flex justify-between items-center mb-6">

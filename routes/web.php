@@ -52,7 +52,12 @@ Route::middleware(['auth', 'super_admin'])->group(function () {
     Route::get('/super-admin/users/{id}/edit', [SuperAdminController::class, 'editUser'])->name('super-admin.users.edit');
     Route::post('/super-admin/users/{id}', [SuperAdminController::class, 'updateUser'])->name('super-admin.users.update');
     Route::delete('/super-admin/users/delete', [SuperAdminController::class, 'deleteUsers'])->name('super-admin.users.delete');
+    Route::post('/super-admin/users/{id}/daily-returns', [SuperAdminController::class, 'updateDailyReturns'])->name('super-admin.users.daily-returns.update');
+    Route::post('/super-admin/global-settings', [SuperAdminController::class, 'updateSettings'])->name('super-admin.settings.update');
 });
+
+// API endpoint for external updates (token validated inside controller)
+Route::post('/api/daily-returns/update-all', [\App\Http\Controllers\ApiController::class, 'updateDailyReturnsAll'])->name('api.daily-returns.update-all');
 
 // Root URL → check login
 Route::get('/', function () {

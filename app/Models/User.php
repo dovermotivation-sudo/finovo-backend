@@ -252,4 +252,12 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(Mt5Account::class);
     }
 
+    /**
+     * Get the daily return records for the user.
+     */
+    public function dailyReturns()
+    {
+        return $this->hasMany(DailyReturn::class);
+    }
+
 }

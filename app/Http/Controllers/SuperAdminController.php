@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\KycDocument;
 use App\Models\Deposit;
+use App\Models\DailyReturn;
+use App\Models\Setting;
 use App\Models\Withdrawal;
 use App\Models\SupportTicket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class SuperAdminController extends Controller
 {
@@ -15,6 +18,7 @@ class SuperAdminController extends Controller
     public function dashboard()
     {
         $data = [
+            'globalMaxDailyReturn' => Setting::get('global_max_daily_return', '5.00'),
             'totalUsers' => User::where('role', 'user')->count(),
             'totalInvestment' => User::where('role', 'user')->sum('portfolio_value'),
             'totalReturns' => User::where('role', 'user')->sum('total_returns'),
@@ -126,5 +130,66 @@ class SuperAdminController extends Controller
             ->delete();
 
         return redirect()->route('super-admin.users')->with('success', $deletedCount . ' user(s) deleted successfully.');
+    }
+
+    // Update daily returns for a specific user
+    public function updateDailyReturns(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        if ($user->role !== 'user') {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $request->validate([
+            'dates'        => 'required|array|max:7',
+            'dates.*'      => 'required|date_format:Y-m-d',
+            'percentages'  => 'required|array',
+            'percentages.*'=> 'nullable|numeric|between:-100,100',
+            'notes'        => 'nullable|array',
+            'notes.*'      => 'nullable|string|max:255',
+        ]);
+
+        $dates       = $request->input('dates', []);
+        $percentages = $request->input('percentages', []);
+        $notes       = $request->input('notes', []);
+
+        foreach ($dates as $index => $date) {
+            $pct  = isset($percentages[$index]) && $percentages[$index] !== '' ? $percentages[$index] : null;
+            $note = $notes[$index] ?? null;
+
+            if ($pct === null) {
+                // Remove the record if percentage is cleared
+                DailyReturn::where('user_id', $user->id)
+                    ->where('return_date', $date)
+                    ->delete();
+                continue;
+            }
+
+            DailyReturn::updateOrCreate(
+                ['user_id' => $user->id, 'return_date' => $date],
+                [
+                    'return_percentage' => $pct,
+                    'return_amount'     => round($user->portfolio_value * abs($pct) / 100, 2),
+                    'notes'             => $note,
+                ]
+            );
+        }
+
+        return redirect()
+            ->route('super-admin.users.edit', $id)
+            ->with('daily_returns_success', 'Daily returns saved successfully.');
+    }
+
+    // Update global settings
+    public function updateSettings(Request $request)
+    {
+        $request->validate([
+            'global_max_daily_return' => 'required|numeric|min:0|max:100',
+        ]);
+
+        Setting::set('global_max_daily_return', $request->input('global_max_daily_return'));
+
+        return redirect()->back()->with('success', 'Global settings updated successfully.');
     }
 }

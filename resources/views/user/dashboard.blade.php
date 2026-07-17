@@ -253,6 +253,29 @@
                                 </div>
                             </div>
                         </div>
+
+                        {{-- ─── Daily Returns Bar Chart ─── --}}
+                        <div class="bg-white rounded-xl shadow-sm p-6">
+                            <div class="flex justify-between items-center mb-5">
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-900">Daily Returns</h3>
+                                    <p class="text-sm text-gray-400 mt-0.5">Last 7 days &middot; % return</p>
+                                </div>
+                                <span id="daily-returns-badge" class="px-3 py-1 rounded-full text-xs font-semibold"></span>
+                            </div>
+
+                            <div class="relative" style="height: 220px;">
+                                <canvas id="dailyReturnsChart"></canvas>
+                            </div>
+
+                            {{-- Summary row --}}
+                            <div class="mt-5 bg-gray-50 rounded-lg p-4 flex justify-between items-center">
+                                <div>
+                                    <p class="text-sm text-gray-500">Last Day's Return</p>
+                                    <p id="dr-latest" class="text-xl font-bold text-gray-900">0.0%</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Right Column -->
@@ -308,6 +331,7 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Tab switching functionality
@@ -340,6 +364,86 @@
                     }
                 });
             });
+
+            // ─── Daily Returns Bar Chart ───
+            const drCanvas = document.getElementById('dailyReturnsChart');
+            if (drCanvas) {
+                const drLabels = @json($labels ?? []);
+                const drValues = @json($values ?? []);
+
+                // Colour each bar: green for positive, red for negative
+                const barColors = drValues.map(v =>
+                    v >= 0 ? 'rgba(34,197,94,0.9)' : 'rgba(239,68,68,0.9)'
+                );
+
+                new Chart(drCanvas, {
+                    type: 'bar',
+                    data: {
+                        labels: drLabels,
+                        datasets: [{
+                            label: 'Daily Return',
+                            data: drValues,
+                            backgroundColor: barColors,
+                            borderRadius: 4,
+                            borderSkipped: false,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: 'rgba(255,255,255,0.95)',
+                                titleColor: '#374151',
+                                bodyColor: '#1f2937',
+                                borderColor: '#e5e7eb',
+                                borderWidth: 1,
+                                padding: 10,
+                                displayColors: false,
+                                callbacks: {
+                                    label: ctx => ` ${ctx.parsed.y >= 0 ? '+' : ''}${ctx.parsed.y.toFixed(1)}%`
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: { display: false },
+                                border: { display: false },
+                                ticks: { color: '#9ca3af', font: { size: 12, family: "'Inter', sans-serif" } }
+                            },
+                            y: {
+                                display: false, // Completely hide Y axis for a cleaner look
+                            }
+                        },
+                        animation: {
+                            duration: 700,
+                            easing: 'easeOutQuart'
+                        }
+                    }
+                });
+
+                // Update latest return
+                const latest = drValues.length ? drValues[drValues.length - 1] : 0;
+                const drLatestEl = document.getElementById('dr-latest');
+                if (drLatestEl) {
+                    drLatestEl.textContent = (latest > 0 ? '+' : '') + latest.toFixed(1) + '%';
+                    drLatestEl.className = 'text-xl font-bold ' + (latest >= 0 ? 'text-green-600' : 'text-red-600');
+                }
+
+                // Badge: overall trend
+                const badge = document.getElementById('daily-returns-badge');
+                if (avg > 0) {
+                    badge.textContent = '▲ Positive Trend';
+                    badge.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700';
+                } else if (avg < 0) {
+                    badge.textContent = '▼ Negative Trend';
+                    badge.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-700';
+                } else {
+                    badge.textContent = '─ Flat';
+                    badge.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-500';
+                }
+            }
         });
     </script>
 </x-app-layout>
