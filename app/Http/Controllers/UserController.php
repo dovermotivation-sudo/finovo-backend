@@ -32,9 +32,12 @@ class UserController extends Controller
             $labels[]  = $date->format('D, d M'); // e.g. "Mon, 11 Jul"
             
             if (isset($records[$key])) {
-                $actualVal = (float) $records[$key]->return_percentage;
+                $actualPct = (float) $records[$key]->return_percentage;
                 // Cap at global max if actual is higher
-                $values[] = $actualVal > $globalMax ? $globalMax : $actualVal;
+                $displayPct = $actualPct > $globalMax ? $globalMax : $actualPct;
+                // Calculate return amount based on user's portfolio value
+                $displayAmount = round($user->portfolio_value * $displayPct / 100, 2);
+                $values[] = $displayAmount;
             } else {
                 $values[] = 0;
             }

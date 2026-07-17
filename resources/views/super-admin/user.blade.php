@@ -47,8 +47,8 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-gray-700 font-medium">{{ $user->name }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-gray-600">{{ $user->email }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-gray-700">₹{{ number_format($user->portfolio_value, 2) }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-gray-700">₹{{ number_format($user->total_returns, 2) }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-gray-700">${{ number_format($user->portfolio_value, 2) }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-gray-700">${{ number_format($user->total_returns, 2) }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-gray-700">{{ $user->growth_rate }}%</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <a href="{{ route('super-admin.users.edit', $user->id) }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg shadow hover:bg-blue-700 transition-colors">

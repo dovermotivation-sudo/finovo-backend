@@ -48,7 +48,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-gray-500 text-sm font-medium">Total Earnings</p>
-                        <p class="text-3xl font-bold text-purple-600 mt-2">₹{{ number_format($stats['total_earnings'], 2) }}</p>
+                        <p class="text-3xl font-bold text-purple-600 mt-2">${{ number_format($stats['total_earnings'], 2) }}</p>
                     </div>
                     <div class="bg-purple-100 rounded-full p-4">
                         <i class="fas fa-coins text-purple-600 text-2xl"></i>
@@ -167,11 +167,11 @@
                                             @if($reward)
                                                 @if($reward->status === 'credited')
                                                     <span class="text-green-600 font-medium">
-                                                        <i class="fas fa-check-circle mr-1"></i>₹{{ number_format($reward->reward_amount, 2) }} Credited
+                                                        <i class="fas fa-check-circle mr-1"></i>${{ number_format($reward->reward_amount, 2) }} Credited
                                                     </span>
                                                 @else
                                                     <span class="text-yellow-600 font-medium">
-                                                        <i class="fas fa-hourglass-half mr-1"></i>₹{{ number_format($reward->reward_amount, 2) }} Pending
+                                                        <i class="fas fa-hourglass-half mr-1"></i>${{ number_format($reward->reward_amount, 2) }} Pending
                                                     </span>
                                                 @endif
                                             @else
@@ -236,7 +236,7 @@
                                     </div>
                                 </div>
                                 <div class="text-right">
-                                    <p class="text-2xl font-bold text-gray-900">₹{{ number_format($reward->reward_amount, 2) }}</p>
+                                    <p class="text-2xl font-bold text-gray-900">${{ number_format($reward->reward_amount, 2) }}</p>
                                     @if($reward->status === 'credited')
                                         <span class="text-xs text-green-600 font-medium">Credited</span>
                                     @elseif($reward->status === 'pending')

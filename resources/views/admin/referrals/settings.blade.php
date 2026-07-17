@@ -87,7 +87,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
-                            <i class="fas fa-user-tie mr-2 text-green-600"></i>Referrer Reward Amount (₹)
+                            <i class="fas fa-user-tie mr-2 text-green-600"></i>Referrer Reward Amount ($)
                         </label>
                         <input type="number" 
                                name="referrer_reward_amount" 
@@ -101,7 +101,7 @@
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
-                            <i class="fas fa-user-plus mr-2 text-blue-600"></i>Referred User Reward Amount (₹)
+                            <i class="fas fa-user-plus mr-2 text-blue-600"></i>Referred User Reward Amount ($)
                         </label>
                         <input type="number" 
                                name="referred_reward_amount" 
@@ -122,11 +122,11 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div class="bg-white rounded-lg p-4 shadow-sm">
                             <p class="text-xs text-gray-500 mb-1">Referrer Gets</p>
-                            <p class="text-2xl font-bold text-green-600">₹<span id="preview-referrer">{{ $settings['referrer_reward_amount']->value }}</span></p>
+                            <p class="text-2xl font-bold text-green-600">$<span id="preview-referrer">{{ $settings['referrer_reward_amount']->value }}</span></p>
                         </div>
                         <div class="bg-white rounded-lg p-4 shadow-sm">
                             <p class="text-xs text-gray-500 mb-1">Referred User Gets</p>
-                            <p class="text-2xl font-bold text-blue-600">₹<span id="preview-referred">{{ $settings['referred_reward_amount']->value }}</span></p>
+                            <p class="text-2xl font-bold text-blue-600">$<span id="preview-referred">{{ $settings['referred_reward_amount']->value }}</span></p>
                         </div>
                     </div>
                 </div>

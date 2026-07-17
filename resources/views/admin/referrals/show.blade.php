@@ -147,7 +147,7 @@
                                     </div>
                                 </div>
                                 <div class="text-right">
-                                    <p class="text-2xl font-bold text-gray-900">₹{{ number_format($reward->reward_amount, 2) }}</p>
+                                    <p class="text-2xl font-bold text-gray-900">${{ number_format($reward->reward_amount, 2) }}</p>
                                     @if($reward->status === 'credited')
                                         <span class="text-xs text-green-600 font-medium">Credited</span>
                                     @elseif($reward->status === 'pending')
@@ -172,15 +172,15 @@
                     <div class="space-y-4">
                         <div class="flex items-center justify-between">
                             <span class="text-sm text-gray-600">Total Rewards</span>
-                            <span class="text-lg font-bold text-purple-600">₹{{ number_format($referral->rewards->sum('reward_amount'), 2) }}</span>
+                            <span class="text-lg font-bold text-purple-600">${{ number_format($referral->rewards->sum('reward_amount'), 2) }}</span>
                         </div>
                         <div class="flex items-center justify-between">
                             <span class="text-sm text-gray-600">Credited</span>
-                            <span class="text-lg font-bold text-green-600">₹{{ number_format($referral->rewards->where('status', 'credited')->sum('reward_amount'), 2) }}</span>
+                            <span class="text-lg font-bold text-green-600">${{ number_format($referral->rewards->where('status', 'credited')->sum('reward_amount'), 2) }}</span>
                         </div>
                         <div class="flex items-center justify-between">
                             <span class="text-sm text-gray-600">Pending</span>
-                            <span class="text-lg font-bold text-yellow-600">₹{{ number_format($referral->rewards->where('status', 'pending')->sum('reward_amount'), 2) }}</span>
+                            <span class="text-lg font-bold text-yellow-600">${{ number_format($referral->rewards->where('status', 'pending')->sum('reward_amount'), 2) }}</span>
                         </div>
                     </div>
                 </div>

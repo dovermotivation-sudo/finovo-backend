@@ -65,7 +65,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-gray-500 text-sm font-medium">Total Rewards</p>
-                        <p class="text-3xl font-bold text-purple-600 mt-2">₹{{ number_format($stats['total_rewards_given'], 2) }}</p>
+                        <p class="text-3xl font-bold text-purple-600 mt-2">${{ number_format($stats['total_rewards_given'], 2) }}</p>
                     </div>
                     <div class="bg-purple-100 rounded-full p-4">
                         <i class="fas fa-gift text-purple-600 text-2xl"></i>
@@ -189,7 +189,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     @if($referral->rewards->count() > 0)
                                         <span class="text-green-600 font-medium">
-                                            ₹{{ number_format($referral->rewards->sum('reward_amount'), 2) }}
+                                            ${{ number_format($referral->rewards->sum('reward_amount'), 2) }}
                                         </span>
                                     @else
                                         <span class="text-gray-400">No rewards</span>

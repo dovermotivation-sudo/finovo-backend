@@ -177,11 +177,11 @@
                                 <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
                                     <div>
                                         <p class="text-sm text-gray-500">Total Amount</p>
-                                        <p class="text-xl font-bold">₹{{ number_format($user->portfolio_value, 2) }} <span class="text-green-500 text-sm">+{{ number_format($user->growth_rate, 2) }}%</span></p>
+                                        <p class="text-xl font-bold">${{ number_format($user->portfolio_value, 2) }} <span class="text-green-500 text-sm">+{{ number_format($user->growth_rate, 2) }}%</span></p>
                                     </div>
                                     <div class="text-right">
                                         <p class="text-sm text-gray-500">Current Value</p>
-                                        <p class="text-lg font-semibold">₹{{ number_format($user->portfolio_value + $user->total_returns, 2) }}</p>
+                                        <p class="text-lg font-semibold">${{ number_format($user->portfolio_value + $user->total_returns, 2) }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -196,7 +196,7 @@
                                 <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
                                     <div>
                                         <p class="text-sm text-gray-500">Total Deposit</p>
-                                        <p class="text-xl font-bold">₹{{ number_format($user->portfolio_value, 2) }}</p>
+                                        <p class="text-xl font-bold">${{ number_format($user->portfolio_value, 2) }}</p>
                                     </div>
                                     <div class="text-right">
                                         <p class="text-sm text-gray-500">Growth Rate (6 Months)</p>
@@ -206,14 +206,14 @@
                                 <div class="p-4 bg-green-50 rounded-lg">
                                     <p class="text-sm text-gray-500">Total Profit (6 Months)</p>
                                     <div class="flex justify-between items-center">
-                                        <p class="text-xl font-bold">₹{{ number_format($sixMonthProfit, 2) }}</p>
+                                        <p class="text-xl font-bold">${{ number_format($sixMonthProfit, 2) }}</p>
                                         <span class="text-green-500 font-medium">+{{ number_format($user->growth_rate * 6, 2) }}%</span>
                                     </div>
                                 </div>
                                 <div class="p-4 bg-indigo-50 rounded-lg">
                                     <p class="text-sm text-gray-500">Total Value (6 Months)</p>
                                     <div class="flex justify-between items-center">
-                                        <p class="text-xl font-bold">₹{{ number_format($sixMonthValue, 2) }}</p>
+                                        <p class="text-xl font-bold">${{ number_format($sixMonthValue, 2) }}</p>
                                         <span class="text-blue-500 font-medium">Deposit + Profit</span>
                                     </div>
                                 </div>
@@ -230,7 +230,7 @@
                                 <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
                                     <div>
                                         <p class="text-sm text-gray-500">Total Deposit</p>
-                                        <p class="text-xl font-bold">₹{{ number_format($user->portfolio_value, 2) }}</p>
+                                        <p class="text-xl font-bold">${{ number_format($user->portfolio_value, 2) }}</p>
                                     </div>
                                     <div class="text-right">
                                         <p class="text-sm text-gray-500">Growth Rate (1 Year)</p>
@@ -240,14 +240,14 @@
                                 <div class="p-4 bg-sky-50 rounded-lg">
                                     <p class="text-sm text-gray-500">Total Profit (1 Year)</p>
                                     <div class="flex justify-between items-center">
-                                        <p class="text-xl font-bold">₹{{ number_format($oneYearProfit, 2) }}</p>
+                                        <p class="text-xl font-bold">${{ number_format($oneYearProfit, 2) }}</p>
                                         <span class="text-green-500 font-medium">+{{ number_format($user->growth_rate * 12, 2) }}%</span>
                                     </div>
                                 </div>
                                 <div class="p-4 bg-indigo-50 rounded-lg">
                                     <p class="text-sm text-gray-500">Total Value (1 Year)</p>
                                     <div class="flex justify-between items-center">
-                                        <p class="text-xl font-bold">₹{{ number_format($oneYearValue, 2) }}</p>
+                                        <p class="text-xl font-bold">${{ number_format($oneYearValue, 2) }}</p>
                                         <span class="text-blue-500 font-medium">Deposit + Profit</span>
                                     </div>
                                 </div>
@@ -259,7 +259,7 @@
                             <div class="flex justify-between items-center mb-5">
                                 <div>
                                     <h3 class="text-lg font-semibold text-gray-900">Daily Returns</h3>
-                                    <p class="text-sm text-gray-400 mt-0.5">Last 7 days &middot; % return</p>
+                                    <p class="text-sm text-gray-400 mt-0.5">Last 7 days &middot; $ return</p>
                                 </div>
                                 <span id="daily-returns-badge" class="px-3 py-1 rounded-full text-xs font-semibold"></span>
                             </div>
@@ -272,7 +272,7 @@
                             <div class="mt-5 bg-gray-50 rounded-lg p-4 flex justify-between items-center">
                                 <div>
                                     <p class="text-sm text-gray-500">Last Day's Return</p>
-                                    <p id="dr-latest" class="text-xl font-bold text-gray-900">0.0%</p>
+                                    <p id="dr-latest" class="text-xl font-bold text-gray-900">$0.00</p>
                                 </div>
                             </div>
                         </div>
@@ -402,7 +402,7 @@
                                 padding: 10,
                                 displayColors: false,
                                 callbacks: {
-                                    label: ctx => ` ${ctx.parsed.y >= 0 ? '+' : ''}${ctx.parsed.y.toFixed(1)}%`
+                                    label: ctx => ` ${ctx.parsed.y >= 0 ? '+$' : '-$'}${Math.abs(ctx.parsed.y).toFixed(2)}`
                                 }
                             }
                         },
@@ -427,7 +427,7 @@
                 const latest = drValues.length ? drValues[drValues.length - 1] : 0;
                 const drLatestEl = document.getElementById('dr-latest');
                 if (drLatestEl) {
-                    drLatestEl.textContent = (latest > 0 ? '+' : '') + latest.toFixed(1) + '%';
+                    drLatestEl.textContent = (latest >= 0 ? '+$' : '-$') + Math.abs(latest).toFixed(2);
                     drLatestEl.className = 'text-xl font-bold ' + (latest >= 0 ? 'text-green-600' : 'text-red-600');
                 }
 
