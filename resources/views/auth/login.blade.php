@@ -100,7 +100,7 @@
             </div>
             <h3 class="text-xl font-bold text-gray-900">Finovo</h3>
             <p class="text-gray-600 max-w-md mx-auto">
-              Finovo is a trusted bot provider giving you access to institutional-grade, automated trading systems. With expert support and intuitive features, we help you succeed in any market with confidence.
+              Finovo is a trusted Platform for investments. With expert support and intuitive features, we help you succeed in any market with confidence.
             </p>
             <p class="text-indigo-700 font-semibold mt-4">
                 Join Finovo today and take control of your financial future.
