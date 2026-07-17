@@ -52,9 +52,6 @@ Route::middleware(['auth', 'super_admin'])->group(function () {
     Route::get('/super-admin/users/{id}/edit', [SuperAdminController::class, 'editUser'])->name('super-admin.users.edit');
     Route::post('/super-admin/users/{id}', [SuperAdminController::class, 'updateUser'])->name('super-admin.users.update');
     Route::delete('/super-admin/users/delete', [SuperAdminController::class, 'deleteUsers'])->name('super-admin.users.delete');
-    Route::get('/super-admin/plans', [SuperAdminController::class, 'plans'])->name('super-admin.plans');
-    Route::get('/super-admin/plans/{id}/edit', [SuperAdminController::class, 'editPlan'])->name('super-admin.plans.edit');
-    Route::post('/super-admin/plans/{id}', [SuperAdminController::class, 'updatePlan'])->name('super-admin.plans.update');
 });
 
 // Root URL → check login

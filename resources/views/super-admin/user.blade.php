@@ -36,7 +36,6 @@
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">{{ __('users.portfolio_value') }}</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">{{ __('users.total_returns') }}</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">{{ __('users.growth_rate') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">{{ __('users.active_plan') }}</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">{{ __('users.actions') }}</th>
                     </tr>
                 </thead>
@@ -51,14 +50,6 @@
                             <td class="px-6 py-4 whitespace-nowrap text-gray-700">₹{{ number_format($user->portfolio_value, 2) }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-gray-700">₹{{ number_format($user->total_returns, 2) }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-gray-700">{{ $user->growth_rate }}%</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-gray-700">
-                            @php $plan = $user->plan->name @endphp    
-                                @if($plan)
-                                    {{ $plan }}
-                                @else
-                                    <span class="text-gray-400">{{ __('users.no_plan') }}</span>
-                                @endif
-                            </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <a href="{{ route('super-admin.users.edit', $user->id) }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg shadow hover:bg-blue-700 transition-colors">
                                     {{ __('users.edit') }}

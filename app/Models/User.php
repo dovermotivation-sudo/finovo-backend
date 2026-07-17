@@ -23,7 +23,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'phone_number',
         'password',
         'role',
-        'plan_id',
         'portfolio_value',
         'growth_rate',
         'total_returns',
@@ -116,10 +115,6 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
-    public function plan()
-    {
-        return $this->belongsTo(Plan::class);
-    }
 
     /**
      * Get the user's KYC documents.

@@ -125,11 +125,7 @@
                 </div>
 
                 <!-- Wallet Details -->
-                <div class="lg:col-span-2 grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="bg-purple-50 p-4 rounded-xl">
-                        <p class="text-sm text-gray-500 mb-1">Active Plans</p>
-                        <p class="text-xl font-bold">{{ $user->plan->name ?? 'No Plan' }}</p>
-                    </div>
+                <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="bg-blue-50 p-4 rounded-xl">
                         <p class="text-sm text-gray-500 mb-1">Portfolio Value</p>
                         <p class="text-xl font-bold">${{ number_format($user->portfolio_value, 2) }}</p>

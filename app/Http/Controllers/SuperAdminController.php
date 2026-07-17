@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Plan;
 use App\Models\KycDocument;
 use App\Models\Deposit;
 use App\Models\Withdrawal;
@@ -19,7 +18,6 @@ class SuperAdminController extends Controller
             'totalUsers' => User::where('role', 'user')->count(),
             'totalInvestment' => User::where('role', 'user')->sum('portfolio_value'),
             'totalReturns' => User::where('role', 'user')->sum('total_returns'),
-            'activePlans' => User::where('plan_id', '!=', null)->where('role', 'user')->count(),
             'recentUsers' => User::where('role', 'user')
                 ->orderBy('created_at', 'desc')
                 ->take(5)
@@ -72,7 +70,7 @@ class SuperAdminController extends Controller
     // Show all users with role 'user'
     public function users()
     {
-        $users = User::where('role', 'user')->with('plan')->orderBy('created_at', 'desc')->get();
+        $users = User::where('role', 'user')->orderBy('created_at', 'desc')->get();
         return view('super-admin.user', compact('users'));
     }
 
@@ -114,51 +112,6 @@ class SuperAdminController extends Controller
         return redirect()->route('super-admin.users')->with('success', 'User updated successfully.');
     }
 
-    // Show all plans
-    public function plans()
-    {
-        $plans = Plan::all();
-        return view('super-admin.plans', compact('plans'));
-    }
-
-    // Show edit form for a plan
-    public function editPlan($id)
-    {
-        $plan = Plan::findOrFail($id);
-        return view('super-admin.edit-plan', compact('plan'));
-    }
-
-    // Handle plan update request
-    public function updatePlan(Request $request, $id)
-    {
-        $plan = Plan::findOrFail($id);
-
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'roi' => 'required|string|max:255',
-            'minimum_investment' => 'required|string|max:255',
-            'risk_level' => 'required|string|max:255',
-            'report_frequency' => 'required|string|max:255',
-            'support_type' => 'required|string|max:255',
-            'activation_time' => 'nullable|string|max:255',
-            'other_features' => 'nullable|string',
-        ]);
-
-        $plan->update([
-            'name' => $request->name,
-            'description' => $request->description,
-            'roi' => $request->roi,
-            'minimum_investment' => $request->minimum_investment,
-            'risk_level' => $request->risk_level,
-            'report_frequency' => $request->report_frequency,
-            'support_type' => $request->support_type,
-            'activation_time' => $request->activation_time,
-            'other_features' => $request->other_features,
-        ]);
-
-        return redirect()->route('super-admin.plans')->with('success', 'Plan updated successfully.');
-    }
 
     // Delete multiple users
     public function deleteUsers(Request $request)

@@ -15,7 +15,6 @@ return new class extends Migration
             $table->string('role')->default('user'); // 'super_admin' or 'user'
             $table->decimal('portfolio_value', 15, 2)->default(0);
             $table->decimal('total_returns', 15, 2)->default(0);
-            $table->integer('plan_id')->default(0);
             $table->decimal('growth_rate', 5, 2)->default(0);
         });        
     }
@@ -29,7 +28,6 @@ return new class extends Migration
             $table->dropColumn('role');
             $table->dropColumn('portfolio_value');
             $table->dropColumn('total_returns');
-            $table->dropColumn('plan_id');
             $table->dropColumn('growth_rate');
         });
     }

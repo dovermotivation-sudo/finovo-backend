@@ -157,20 +157,7 @@
                     </div>
                 </div>
 
-                <!-- Active Plans -->
-                <div class="bg-white rounded-xl shadow-sm p-6">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-sm font-medium text-gray-500">Active Plans</p>
-                            <h3 class="text-2xl font-bold text-gray-900">{{ number_format($activePlans) }}</h3>
-                        </div>
-                        <div class="p-3 rounded-lg bg-indigo-50">
-                            <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
+
             </div>
 
             <!-- KYC Stats Cards -->

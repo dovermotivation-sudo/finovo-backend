@@ -81,66 +81,6 @@
                         @enderror
                     </div>
 
-                    <!-- Plan Tabs -->
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <label class="block text-sm font-medium text-gray-700">Select a Plan</label>
-                        </div>
-                        <div class="flex space-x-2 border-b mb-4">
-                            <!--<button type="button" class="tab-btn px-4 py-2 -mb-px font-medium border-b-2 border-indigo-500 text-indigo-600" data-tab="flexible">Flexible Investment Packages</button>-->
-                            <button type="button" class="tab-btn px-4 py-2 -mb-px font-medium border-b-2 border-transparent text-gray-500" data-tab="smart">Smart Bot Packages</button>
-                        </div>
-
-                        <!--<div id="flexible" class="tab-content space-y-3">-->
-                        <!--    @foreach ($plans->where('plan_type', 'Flexible Investment Packages') as $plan)-->
-                        <!--        <label for="plan-{{ $plan->id }}" class="block cursor-pointer">-->
-                        <!--            <input type="radio" id="plan-{{ $plan->id }}" name="plan_id" value="{{ $plan->id }}" class="hidden peer" {{ old('plan_id') == $plan->id ? 'checked' : '' }}>-->
-                        <!--            <div class="p-4 border rounded-lg hover:shadow-md transition duration-200 peer-checked:border-indigo-500 peer-checked:ring-2 peer-checked:ring-indigo-200">-->
-                        <!--                <div class="flex items-start">-->
-                        <!--                    <div class="flex items-center h-5">-->
-                        <!--                        <div class="w-5 h-5 border-2 border-gray-300 rounded-full flex items-center justify-center mr-3 peer-checked:bg-indigo-500 peer-checked:border-indigo-500">-->
-                        <!--                            <svg class="w-3 h-3 text-white hidden peer-checked:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">-->
-                        <!--                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />-->
-                        <!--                            </svg>-->
-                        <!--                        </div>-->
-                        <!--                    </div>-->
-                        <!--                    <div>-->
-                        <!--                        <h3 class="font-semibold text-gray-900">{{ $plan->name }}</h3>-->
-                        <!--                        <p class="text-sm text-gray-600 mt-1"><strong>ROI:</strong> {{ $plan->roi }}</p>-->
-                        <!--                        <p class="text-sm text-gray-600"><strong>Min Investment:</strong> {{ $plan->minimum_investment }}</p>-->
-                        <!--                        <p class="text-sm text-gray-600 mt-2">{{ $plan->description }}</p>-->
-                        <!--                    </div>-->
-                        <!--                </div>-->
-                        <!--            </div>-->
-                        <!--        </label>-->
-                        <!--    @endforeach-->
-                        <!--</div>-->
-
-                        <div id="smart" class="tab-content hidden space-y-3">
-                            @foreach ($plans->where('plan_type', 'Smart Bot Packages') as $plan)
-                                <label for="plan-{{ $plan->id }}" class="block cursor-pointer">
-                                    <input type="radio" id="plan-{{ $plan->id }}" name="plan_id" value="{{ $plan->id }}" class="hidden peer" {{ old('plan_id') == $plan->id ? 'checked' : '' }}>
-                                    <div class="p-4 border rounded-lg hover:shadow-md transition duration-200 peer-checked:border-indigo-500 peer-checked:ring-2 peer-checked:ring-indigo-200">
-                                        <div class="flex items-start">
-                                            <div class="flex items-center h-5">
-                                                <div class="w-5 h-5 border-2 border-gray-300 rounded-full flex items-center justify-center mr-3 peer-checked:bg-indigo-500 peer-checked:border-indigo-500">
-                                                    <svg class="w-3 h-3 text-white hidden peer-checked:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <h3 class="font-semibold text-gray-900">{{ $plan->name }}</h3>
-                                                <p class="text-sm text-gray-600 mt-1"><strong>ROI:</strong> {{ $plan->roi }}</p>
-                                                <p class="text-sm text-gray-600"><strong>Min Investment:</strong> {{ $plan->minimum_investment }}</p>
-                                                <p class="text-sm text-gray-600 mt-2">{{ $plan->description }}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </label>
-                            @endforeach
-                        </div>
-                    </div>
 
                     <!-- Terms -->
                     <div class="flex items-center">
@@ -183,35 +123,10 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script>
         $(document).ready(function () {
-    // Tab switching
-    $('.tab-btn').click(function () {
-        var tab = $(this).data('tab');
-        $('.tab-btn')
-            .removeClass('border-indigo-500 text-indigo-600')
-            .addClass('border-transparent text-gray-500');
-        $(this)
-            .addClass('border-indigo-500 text-indigo-600')
-            .removeClass('border-transparent text-gray-500');
-        $('.tab-content').addClass('hidden');
-        $('#' + tab).removeClass('hidden');
-    });
-
-    // Form validation
+        // Form validation
     $('form').on('submit', function (e) {
         let isValid = true;
-        const planSelected = $('input[name="plan_id"]:checked').length > 0;
         const termsChecked = $('#terms').is(':checked');
-
-        // Reset states
-        $('label[for^="plan-"] > div')
-            .removeClass('border-red-500 ring-2 ring-red-200');
-
-        // Validate plan selection
-        if (!planSelected) {
-            $('.tab-content:not(.hidden) label > div')
-                .addClass('border-red-500 ring-2 ring-red-200');
-            isValid = false;
-        }
 
         // Validate terms
         if (!termsChecked) {
@@ -226,80 +141,10 @@
         }
     });
 
-    // Clear error when selecting a plan
-    $('input[name="plan_id"]').on('change', function () {
-        $('label[for^="plan-"] > div')
-            .removeClass('border-red-500 ring-2 ring-red-200');
-    });
-
     // Clear error when checking terms
     $('#terms').on('change', function () {
         $(this).closest('div').removeClass('text-red-600');
     });
-
-    // Handle label click manually
-    $('label[for^="plan-"]').on('click', function (e) {
-        e.preventDefault();
-        const radioId = $(this).attr('for');
-        $('#' + radioId).prop('checked', true).trigger('change');
-    });
-
-    // Handle radio button change (update design)
-    $('input[name="plan_id"]').on('change', function () {
-        $('label[for^="plan-"] > div')
-            .removeClass('border-indigo-500 bg-indigo-50')
-            .addClass('border-gray-200');
-
-        $('label[for^="plan-"] .rounded-full')
-            .removeClass('border-indigo-700 bg-indigo-700')
-            .addClass('border-gray-400')
-            .find('svg')
-            .hide();
-
-        if ($(this).is(':checked')) {
-            const $label = $('label[for="' + $(this).attr('id') + '"]');
-            $label.find('> div')
-                .addClass('border-indigo-500 bg-indigo-50')
-                .removeClass('border-gray-200');
-            $label.find('.rounded-full')
-                .addClass('border-indigo-700 bg-indigo-700')
-                .removeClass('border-gray-400')
-                .find('svg')
-                .show();
-        }
-    });
-
-    // Initialize
-    $('input[name="plan_id"]:checked').trigger('change');
-
-    // --- NEW CODE: Select plan from URL ---
-    (function selectPlanFromURL() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const planName = urlParams.get('plan'); // Example: ?plan=Plan%20A
-
-        if (!planName) return;
-
-        const $planInput = $('input[name="plan_id"]').filter(function () {
-            return $(this).siblings('div').find('h3').text().trim() === planName;
-        });
-
-        if ($planInput.length) {
-            // Check the radio button
-            $planInput.prop('checked', true).trigger('change');
-
-            // Switch tab if necessary
-            const tabType = $planInput.closest('.tab-content').attr('id');
-            $('.tab-btn')
-                .removeClass('border-indigo-500 text-indigo-600')
-                .addClass('border-transparent text-gray-500');
-            $('.tab-btn[data-tab="' + tabType + '"]')
-                .addClass('border-indigo-500 text-indigo-600')
-                .removeClass('border-transparent text-gray-500');
-
-            $('.tab-content').addClass('hidden');
-            $('#' + tabType).removeClass('hidden');
-        }
-    })();
 });
 
     </script>

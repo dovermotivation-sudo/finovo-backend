@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
-use App\Models\Plan;
 use Illuminate\Support\Facades\Session;
 use App\Services\ReferralService;
 
@@ -22,9 +21,8 @@ class RegisteredUserController extends Controller
      */
     public function create(Request $request): View
     {
-        $plans = Plan::all(); // Fetch all plans
         $referralCode = $request->get('ref'); // Get referral code from URL
-        return view('auth.register', compact('plans', 'referralCode'));
+        return view('auth.register', compact('referralCode'));
     }
 
     /**
@@ -39,7 +37,6 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'phone_number' => ['required', 'string', 'max:20','regex:/^[0-9\-\+\(\)\s]+$/', 'unique:users,phone_number'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'plan_id' => ['required', 'exists:plans,id'],
             'referral_code' => ['nullable', 'string', 'exists:users,referral_code'],
         ]);
 
@@ -51,7 +48,6 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'phone_number' => $request->phone_number,
             'password' => Hash::make($request->password),
-            'plan_id' => $request->plan_id,
             'role' => 'user',
             'portfolio_value' => 0,
             'growth_rate' => 0,
