@@ -8,7 +8,7 @@
                 <div class="flex items-center space-x-3">
                     <div class="bg-white rounded-xl px-3 shadow-sm flex items-center justify-center overflow-visible" style="height: 52px;">
                         <a href="{{ Auth::user()->role === 'super_admin' ? route('super-admin.dashboard') : route('user.dashboard') }}" class="flex items-center justify-center overflow-visible">
-                            <img src="{{ asset('logo/finovo-logo.png') }}" alt="Finovo Logo" class="h-16 w-auto max-w-none">
+                            <img src="{{ asset('logo/finovo-logo.png') }}" alt="Finovo Logo" class="h-[51px] w-auto max-w-none">
                         </a>
                     </div>
                 </div>
