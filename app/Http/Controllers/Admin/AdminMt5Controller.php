@@ -34,9 +34,9 @@ class AdminMt5Controller extends Controller
         $user = \App\Models\User::findOrFail($id);
 
         $mt5Account = $user->mt5Account()->firstOrNew(['user_id' => $user->id]);
-        $mt5Account->login = $request->login;
-        $mt5Account->password = $request->password;
-        $mt5Account->server = $request->server;
+        $mt5Account->login = $request->input('login');
+        $mt5Account->password = $request->input('password');
+        $mt5Account->server = $request->input('server');
         $mt5Account->status = 'connected';
         $mt5Account->save();
 
