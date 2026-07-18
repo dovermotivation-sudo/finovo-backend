@@ -14,7 +14,7 @@
                 </div>
                 
                 <!-- Right side -->
-                <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2 sm:space-x-4 min-w-0 flex-shrink">
                     <!-- Language Dropdown -->
                     <div class="relative">
                         <button id="languageDropdown" class="flex items-center space-x-2 bg-white bg-opacity-20 rounded-lg px-3 py-2 hover:bg-opacity-30 transition-colors">
@@ -51,7 +51,7 @@
                     </div>
                     
                     <!-- Other Icons -->
-                    <div class="flex items-center space-x-3">
+                    <div class="hidden sm:flex items-center space-x-3">
                         <i class="fas fa-bell text-lg hover:text-blue-200 cursor-pointer transition-colors"></i>
                         <i class="fas fa-cog text-lg hover:text-blue-200 cursor-pointer transition-colors"></i>
                         <i class="fas fa-chart-bar text-lg hover:text-blue-200 cursor-pointer transition-colors"></i>
@@ -156,15 +156,6 @@
                         </x-dropdown>
                     </div>
                     
-                    <!-- Mobile menu button -->
-                    <div class="sm:hidden">
-                        <button @click="open = ! open" class="text-white hover:text-blue-200 transition-colors">
-                            <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                                <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                                <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -173,10 +164,10 @@
     <!-- Secondary Navigation Bar for Menu Items -->
     <nav class="bg-white border-b border-gray-200 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex space-x-8">
+            <div class="flex space-x-4 sm:space-x-8 overflow-x-auto scrollbar-hide" style="-ms-overflow-style: none; scrollbar-width: none;">
                 <!-- Dashboard Link -->
                 <a href="{{ Auth::user()->role === 'super_admin' ? route('super-admin.dashboard') : route('user.dashboard') }}" 
-                   class="border-b-2 {{ request()->routeIs(Auth::user()->role === 'super_admin' ? 'super-admin.dashboard' : 'user.dashboard') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
+                   class="border-b-2 whitespace-nowrap flex-shrink-0 {{ request()->routeIs(Auth::user()->role === 'super_admin' ? 'super-admin.dashboard' : 'user.dashboard') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
                     <i class="fas fa-chart-line"></i>
                     <span>{{ __('dashboard.Dashboard') }}</span>
                 </a>
@@ -191,102 +182,100 @@
                 
                 <!-- Crypto Link -->
                 <a href="{{ route('crypto') }}" 
-                   class="border-b-2 {{ request()->routeIs('crypto') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
+                   class="border-b-2 whitespace-nowrap flex-shrink-0 {{ request()->routeIs('crypto') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
                     <i class="fab fa-bitcoin"></i>
                     <span>Crypto</span>
                 </a>
                 
                 <!-- Derivative Link -->
                 <a href="{{ route('derivative') }}" 
-                   class="border-b-2 {{ request()->routeIs('derivative') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
+                   class="border-b-2 whitespace-nowrap flex-shrink-0 {{ request()->routeIs('derivative') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
                     <i class="fas fa-chart-area"></i>
                     <span>Derivative</span>
                 </a>
                 
                 <!-- Fix Flex Link -->
                 <a href="{{ route('fix-flex') }}" 
-                   class="border-b-2 {{ request()->routeIs('fix-flex') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
+                   class="border-b-2 whitespace-nowrap flex-shrink-0 {{ request()->routeIs('fix-flex') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
                     <i class="fas fa-coins"></i>
                     <span>Fix Flex</span>
                 </a>
                 
                 <!-- Compare Link -->
                 <a href="{{ route('compare') }}" 
-                   class="border-b-2 {{ request()->routeIs('compare') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
+                   class="border-b-2 whitespace-nowrap flex-shrink-0 {{ request()->routeIs('compare') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
                     <i class="fas fa-balance-scale"></i>
                     <span>Compare</span>
                 </a>
                 
                 <!-- Referrals Link -->
                 <a href="{{ route('referrals.index') }}" 
-                   class="border-b-2 {{ request()->routeIs('referrals.*') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
+                   class="border-b-2 whitespace-nowrap flex-shrink-0 {{ request()->routeIs('referrals.*') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
                     <i class="fas fa-gift"></i>
                     <span>Referrals</span>
                 </a>
                 
                 <!-- KYC Application Link -->
-                <div class="ml-auto">
-                    <a href="{{ route('kyc.application') }}" 
-                       class="border-b-2 {{ request()->routeIs('kyc.application') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
-                        <i class="fas fa-user-check"></i>
-                        <span>KYC Application</span>
-                    </a>
-                </div>
+                <a href="{{ route('kyc.application') }}" 
+                   class="border-b-2 whitespace-nowrap flex-shrink-0 {{ request()->routeIs('kyc.application') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
+                    <i class="fas fa-user-check"></i>
+                    <span>KYC Application</span>
+                </a>
                 @endif
                 
                 <!-- Users Link (Super Admin Only) -->
                 @if(Auth::user()->role === 'super_admin')
                 <a href="{{ route('super-admin.users') }}" 
-                   class="border-b-2 {{ request()->routeIs('super-admin.users') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
+                   class="border-b-2 whitespace-nowrap flex-shrink-0 {{ request()->routeIs('super-admin.users') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
                     <i class="fas fa-users"></i>
                     <span>{{ __('dashboard.Users') }}</span>
                 </a>
                 
                 <!-- KYC Management Link (Super Admin Only) -->
                 <a href="{{ route('admin.kyc.index') }}" 
-                   class="border-b-2 {{ request()->routeIs('admin.kyc.*') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
+                   class="border-b-2 whitespace-nowrap flex-shrink-0 {{ request()->routeIs('admin.kyc.*') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
                     <i class="fas fa-id-card"></i>
                     <span>KYC Management</span>
                 </a>
                 
                 <!-- Referrals Management Link (Super Admin Only) -->
                 <a href="{{ route('admin.referrals.index') }}" 
-                   class="border-b-2 {{ request()->routeIs('admin.referrals.*') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
+                   class="border-b-2 whitespace-nowrap flex-shrink-0 {{ request()->routeIs('admin.referrals.*') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
                     <i class="fas fa-gift"></i>
                     <span>Referrals</span>
                 </a>
 
                 <!-- Deposits Management Link (Super Admin Only) -->
                 <a href="{{ route('admin.deposits.index') }}" 
-                   class="border-b-2 {{ request()->routeIs('admin.deposits.*') && !request()->routeIs('admin.deposits.settings') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
+                   class="border-b-2 whitespace-nowrap flex-shrink-0 {{ request()->routeIs('admin.deposits.*') && !request()->routeIs('admin.deposits.settings') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
                     <i class="fas fa-wallet"></i>
                     <span>Deposit Management</span>
                 </a>
 
                 <!-- Withdrawals Management Link (Super Admin Only) -->
                 <a href="{{ route('admin.withdrawals.index') }}" 
-                   class="border-b-2 {{ request()->routeIs('admin.withdrawals.*') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
+                   class="border-b-2 whitespace-nowrap flex-shrink-0 {{ request()->routeIs('admin.withdrawals.*') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
                     <i class="fas fa-hand-holding-usd"></i>
                     <span>Withdrawal Management</span>
                 </a>
 
                 <!-- Deposit Settings Link (Super Admin Only) -->
                 <a href="{{ route('admin.deposits.settings') }}" 
-                   class="border-b-2 {{ request()->routeIs('admin.deposits.settings') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
+                   class="border-b-2 whitespace-nowrap flex-shrink-0 {{ request()->routeIs('admin.deposits.settings') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
                     <i class="fas fa-cog"></i>
                     <span>Deposit Settings</span>
                 </a>
 
                 <!-- Support Management Link (Super Admin Only) -->
                 <a href="{{ route('admin.support.index') }}" 
-                   class="border-b-2 {{ request()->routeIs('admin.support.*') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
+                   class="border-b-2 whitespace-nowrap flex-shrink-0 {{ request()->routeIs('admin.support.*') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
                     <i class="fas fa-life-ring"></i>
                     <span>Support Management</span>
                 </a>
 
                 <!-- MT5 Connections Link (Super Admin Only) -->
                 <a href="{{ route('admin.mt5.index') }}" 
-                   class="border-b-2 {{ request()->routeIs('admin.mt5.*') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
+                   class="border-b-2 whitespace-nowrap flex-shrink-0 {{ request()->routeIs('admin.mt5.*') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
                     <i class="fas fa-server"></i>
                     <span>MT5 Connections</span>
                 </a>
@@ -295,57 +284,4 @@
         </div>
     </nav>
 
-    <!-- Mobile Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden bg-white border-b border-gray-200">
-        <div class="pt-2 pb-3 space-y-1">
-            <a href="{{ Auth::user()->role === 'super_admin' ? route('super-admin.dashboard') : route('user.dashboard') }}" 
-               class="block pl-3 pr-4 py-2 border-l-4 {{ request()->routeIs(Auth::user()->role === 'super_admin' ? 'super-admin.dashboard' : 'user.dashboard') ? 'border-blue-400 text-blue-700 bg-blue-50' : 'border-transparent text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300' }} text-base font-medium transition-colors">
-                <i class="fas fa-chart-line mr-2"></i>{{ __('dashboard.Dashboard') }}
-            </a>
-            
-            @if(Auth::user()->role !== 'super_admin')
-            <a href="{{ route('dashboard') }}" 
-               class="block pl-3 pr-4 py-2 border-l-4 {{ request()->routeIs('dashboard') ? 'border-blue-400 text-blue-700 bg-blue-50' : 'border-transparent text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300' }} text-base font-medium transition-colors">
-                <i class="fas fa-user-circle mr-2"></i>User Dashboard
-            </a>
-            
-            <a href="{{ route('crypto') }}" 
-               class="block pl-3 pr-4 py-2 border-l-4 {{ request()->routeIs('crypto') ? 'border-blue-400 text-blue-700 bg-blue-50' : 'border-transparent text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300' }} text-base font-medium transition-colors">
-                <i class="fab fa-bitcoin mr-2"></i>Crypto
-            </a>
-            
-            <a href="{{ route('derivative') }}" 
-               class="block pl-3 pr-4 py-2 border-l-4 {{ request()->routeIs('derivative') ? 'border-blue-400 text-blue-700 bg-blue-50' : 'border-transparent text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300' }} text-base font-medium transition-colors">
-                <i class="fas fa-chart-area mr-2"></i>Derivative
-            </a>
-            
-            <a href="{{ route('fix-flex') }}" 
-               class="block pl-3 pr-4 py-2 border-l-4 {{ request()->routeIs('fix-flex') ? 'border-blue-400 text-blue-700 bg-blue-50' : 'border-transparent text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300' }} text-base font-medium transition-colors">
-                <i class="fas fa-coins mr-2"></i>Fix Flex
-            </a>
-            
-            <a href="{{ route('compare') }}" 
-               class="block pl-3 pr-4 py-2 border-l-4 {{ request()->routeIs('compare') ? 'border-blue-400 text-blue-700 bg-blue-50' : 'border-transparent text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300' }} text-base font-medium transition-colors">
-                <i class="fas fa-balance-scale mr-2"></i>Compare
-            </a>
-            
-            <a href="{{ route('referrals.index') }}" 
-               class="block pl-3 pr-4 py-2 border-l-4 {{ request()->routeIs('referrals.*') ? 'border-blue-400 text-blue-700 bg-blue-50' : 'border-transparent text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300' }} text-base font-medium transition-colors">
-                <i class="fas fa-gift mr-2"></i>Referrals
-            </a>
-            
-            <a href="{{ route('kyc.application') }}" 
-               class="block pl-3 pr-4 py-2 border-l-4 {{ request()->routeIs('kyc.application') ? 'border-blue-400 text-blue-700 bg-blue-50' : 'border-transparent text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300' }} text-base font-medium transition-colors">
-                <i class="fas fa-user-check mr-2"></i>KYC Application
-            </a>
-            @endif
-            
-            @if(Auth::user()->role === 'super_admin')
-            <a href="{{ route('super-admin.users') }}" 
-               class="block pl-3 pr-4 py-2 border-l-4 {{ request()->routeIs('super-admin.users') ? 'border-blue-400 text-blue-700 bg-blue-50' : 'border-transparent text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300' }} text-base font-medium transition-colors">
-                <i class="fas fa-users mr-2"></i>{{ __('dashboard.Users') }}
-            </a>
-            @endif
-        </div>
-    </div>
 </div>
