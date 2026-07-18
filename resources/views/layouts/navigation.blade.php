@@ -164,7 +164,7 @@
     <!-- Secondary Navigation Bar for Menu Items -->
     <nav class="bg-white border-b border-gray-200 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex space-x-4 sm:space-x-8 overflow-x-auto scrollbar-hide" style="-ms-overflow-style: none; scrollbar-width: none;">
+            <div class="flex gap-x-4 sm:gap-x-8 gap-y-2 overflow-x-auto md:overflow-visible md:flex-wrap scrollbar-hide" style="-ms-overflow-style: none; scrollbar-width: none;">
                 <!-- Dashboard Link -->
                 <a href="{{ Auth::user()->role === 'super_admin' ? route('super-admin.dashboard') : route('user.dashboard') }}" 
                    class="border-b-2 whitespace-nowrap flex-shrink-0 {{ request()->routeIs(Auth::user()->role === 'super_admin' ? 'super-admin.dashboard' : 'user.dashboard') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} py-4 px-1 text-sm font-medium flex items-center space-x-2 transition-colors">
